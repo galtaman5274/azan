@@ -1,0 +1,16 @@
+{
+    "title": "Elif Education",
+    "drawerProfileUserName": "Kullanici",
+    "changeTheme": "Tema Değiştir",
+    "changeLanguage": "Dili Değiştir",
+    "education": "Education",
+    "sampleEmail": "user@example.com",
+    "practicum": "Elif Practicum",
+    "empoyment": "Elif Employment",
+    "chat": "Elif Chat",
+    "educationMenuCategory": "Kategori",
+    "educationMenuSubcategory": "Alt Kategori",
+    "video": "Video",
+    "theory": "Teori",
+    "practice": "Uygulama"
+}

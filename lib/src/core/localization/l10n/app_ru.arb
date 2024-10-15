@@ -1,0 +1,16 @@
+{
+    "title": "Elif Education",
+    "drawerProfileUserName": "Пользователь",
+    "changeTheme": "Поменять Тему",
+    "changeLanguage": "Поменять Язык",
+    "education": "Education",
+    "sampleEmail": "user@example.com",
+    "practicum": "Elif Practicum",
+    "empoyment": "Elif Employment",
+    "chat": "Elif Chat",
+    "educationMenuCategory": "Категория",
+    "educationMenuSubcategory": "Подкатегория",
+    "video": "Видео",
+    "theory": "Теория",
+    "practice": "Практика"
+}

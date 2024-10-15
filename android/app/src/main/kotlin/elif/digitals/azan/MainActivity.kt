@@ -1,0 +1,5 @@
+package elif.digitals.azan
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
