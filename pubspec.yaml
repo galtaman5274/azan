@@ -55,6 +55,7 @@ dependencies:
   geolocator: ^13.0.1
   dropdown_search: ^6.0.1
   audioplayers: ^6.1.0
+  get_it: ^8.0.2
 
 
 dev_dependencies:
@@ -78,6 +79,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/audio/adhan.mp3
     - assets/images/
     - assets/fonts/
   # An image asset can refer to one or more resolution-specific "variants", see

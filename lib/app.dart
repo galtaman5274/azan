@@ -1,9 +1,16 @@
-import 'package:azan/src/core/localization/localization.dart';
-import 'package:azan/src/core/timer/time_provider.dart';
-import 'package:azan/src/features/main/main_layout.dart';
-import 'package:azan/src/features/main/main_provider.dart';
-import 'package:azan/src/features/settings/controllers/prayer_provider.dart';
-import 'package:azan/src/features/settings/view/presetup.dart';
+import 'package:azan/app/services/audio_service.dart';
+import 'package:azan/app/services/location_service.dart';
+import 'package:azan/app/services/prayer_service.dart';
+import 'package:azan/app/settings/storage_controller.dart';
+import 'package:azan/domain/location_settings.dart';
+import 'package:azan/injection.dart';
+import 'package:azan/presentation/localization/localization.dart';
+import 'package:azan/app/timer/time_provider.dart';
+import 'package:azan/presentation/pages/main/main_layout.dart';
+import 'package:azan/app/screen_saver/main_provider.dart';
+import 'package:azan/app/prayer/prayer_provider.dart';
+import 'package:azan/app/settings/settings_provider.dart';
+import 'package:azan/presentation/pages/settings/presetup.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +39,11 @@ class _AppState extends State<App> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
-        ChangeNotifierProvider(create: (_) => TimeDateNotifier()),
-        ChangeNotifierProvider(create: (_) => PrayerTimesNotifier())
+        // ChangeNotifierProvider(create: (_) => TimeDateNotifier()),
+        ChangeNotifierProvider(create: (_) => PrayerTimesNotifier(sl<PrayerService>(),sl<StorageController>())),
+        ChangeNotifierProvider(
+      create: (_) => SetupProvider())
+
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -42,9 +52,8 @@ class _AppState extends State<App> {
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           locale: _locale, // Current locale (set by the user or system)
-          title: 'Elif',
+          title: 'Azan',
           debugShowCheckedModeBanner: false,
-          initialRoute: '/',
           routes: {
             '/': (context) => const AppStart(),
             '/setup': (context) => const SetupPage(),
@@ -62,10 +71,15 @@ class AppStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _checkIfSetupRequired(),
+      future: Provider.of<SetupProvider>(context).storage.checkIfSetupRequired(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Scaffold(
+            body: Center(
+                child: Text('An error occurred. Please try again later.')),
+          );
         } else if (snapshot.data == true) {
           return const SetupPage(); // Show Setup Page if settings are missing
         } else {
@@ -75,11 +89,5 @@ class AppStart extends StatelessWidget {
     );
   }
 
-  Future<bool> _checkIfSetupRequired() async {
-    const storage = FlutterSecureStorage();
-    final latitude = await storage.read(key: 'latitude');
-    final longitude = await storage.read(key: 'longitude');
-    final method = await storage.read(key: 'calculationMethod');
-    return latitude == null || longitude == null || method == null;
-  }
+  
 }

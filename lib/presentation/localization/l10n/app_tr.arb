@@ -1,0 +1,16 @@
+{
+    "prayerFajr": "Fajr",
+    "prayerTulu": "Tulu",
+    "prayerDhuhr": "Dhuhr",
+    "prayerAsr": "Asr",
+    "prayerMaghrib": "Maghrib",
+    "prayerIsha": "Isha",
+    "homeButtonClose": "close",
+    "homeButtonAdhan": "adhan",
+    "homeButtonQuran": "quran",
+    "homeButtonSettings": "settings",
+    "timeLeftText": "Remaining",
+    "video": "Video",
+    "theory": "Theory",
+    "practice": "Practice"
+}
