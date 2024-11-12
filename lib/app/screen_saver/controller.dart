@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 // Screen Saver Controller
 class ScreenSaverController extends ChangeNotifier {
+
+
   final List<String> images;
   final TickerProvider vsync;
   final VoidCallback onShowScreenSaver;

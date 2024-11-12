@@ -1,5 +1,4 @@
 import 'package:adhan/adhan.dart';
-import 'package:azan/app/settings/settings_provider.dart';
 import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/home/components/location_widget.dart';
 import 'package:azan/presentation/pages/home/components/main_button.dart';

@@ -10,10 +10,8 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage>
-    with SingleTickerProviderStateMixin {
+class _SettingsPageState extends State<SettingsPage> {
   final _storage = const FlutterSecureStorage();
-  TabController? _tabController;
 
   // Store adjustment values for prayer times in minutes
   Map<String, int> _prayerAdjustments = {
@@ -24,41 +22,37 @@ class _SettingsPageState extends State<SettingsPage>
     'isha': 0,
   };
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController?.dispose();
-    super.dispose();
-  }
+  String _currentSection = 'Prayer Adjustments';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Prayer Adjustments'),
-            Tab(text: 'Tab 2'),
-            Tab(text: 'Tab 3'),
-          ],
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: Row(
         children: [
-          // Prayer Adjustments Tab
-          _buildPrayerAdjustmentsTab(),
-
-          // Empty Tabs for Future Use
-          const Center(child: Text('Tab 2 Content Here')),
-          const Center(child: Text('Tab 3 Content Here')),
+          // Left-side menu
+          Container(
+            width: 70,
+            color: Colors.grey[900],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                _buildMenuItem(Icons.access_time, 'Prayer Adjustments'),
+                _buildMenuItem(Icons.settings, 'Tab 2'),
+                _buildMenuItem(Icons.info, 'Tab 3'),
+              ],
+            ),
+          ),
+          // Content Area
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: _buildContent(),
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -73,53 +67,79 @@ class _SettingsPageState extends State<SettingsPage>
     );
   }
 
-  Widget _buildPrayerAdjustmentsTab() {
+  Widget _buildMenuItem(IconData icon, String section) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Adjust Prayer Times (in minutes):',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          const SizedBox(height: 20),
-          Column(
-            children: _prayerAdjustments.keys.map((prayer) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    prayer.toUpperCase(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(
-                    width: 50,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: _prayerAdjustments[prayer].toString(),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _prayerAdjustments[prayer] = int.tryParse(value) ?? 0;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 30),
-          Center(
-            child: ElevatedButton(
-              onPressed: _saveAdjustments,
-              child: const Text('Save Adjustments'),
-            ),
-          ),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: IconButton(
+        icon: Icon(icon),
+        color: _currentSection == section ? Colors.blue : Colors.white,
+        iconSize: 30.0,
+        onPressed: () {
+          setState(() {
+            _currentSection = section;
+          });
+        },
       ),
+    );
+  }
+
+  Widget _buildContent() {
+    switch (_currentSection) {
+      case 'Prayer Adjustments':
+        return _buildPrayerAdjustmentsTab();
+      case 'Tab 2':
+        return const Center(child: Text('Tab 2 Content Here'));
+      case 'Tab 3':
+        return const Center(child: Text('Tab 3 Content Here'));
+      default:
+        return const Center(child: Text('Content not found'));
+    }
+  }
+
+  Widget _buildPrayerAdjustmentsTab() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Adjust Prayer Times (in minutes):',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        const SizedBox(height: 20),
+        Column(
+          children: _prayerAdjustments.keys.map((prayer) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  prayer.toUpperCase(),
+                  style: const TextStyle(fontSize: 16),
+                ),
+                SizedBox(
+                  width: 50,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: _prayerAdjustments[prayer].toString(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _prayerAdjustments[prayer] = int.tryParse(value) ?? 0;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 30),
+        Center(
+          child: ElevatedButton(
+            onPressed: _saveAdjustments,
+            child: const Text('Save Adjustments'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -130,8 +150,7 @@ class _SettingsPageState extends State<SettingsPage>
           value: _prayerAdjustments[prayer].toString());
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          content: Text('Prayer time adjustments saved successfully!')),
+      const SnackBar(content: Text('Prayer time adjustments saved successfully!')),
     );
   }
 }

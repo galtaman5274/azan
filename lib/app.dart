@@ -1,17 +1,12 @@
-import 'package:azan/app/services/audio_service.dart';
-import 'package:azan/app/services/location_service.dart';
 import 'package:azan/app/services/prayer_service.dart';
 import 'package:azan/app/settings/storage_controller.dart';
-import 'package:azan/domain/location_settings.dart';
 import 'package:azan/injection.dart';
 import 'package:azan/presentation/localization/localization.dart';
-import 'package:azan/app/timer/time_provider.dart';
 import 'package:azan/presentation/pages/main/main_layout.dart';
 import 'package:azan/app/screen_saver/main_provider.dart';
 import 'package:azan/app/prayer/prayer_provider.dart';
 import 'package:azan/app/settings/settings_provider.dart';
 import 'package:azan/presentation/pages/settings/presetup.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +37,7 @@ class _AppState extends State<App> {
         // ChangeNotifierProvider(create: (_) => TimeDateNotifier()),
         ChangeNotifierProvider(create: (_) => PrayerTimesNotifier(sl<PrayerService>(),sl<StorageController>())),
         ChangeNotifierProvider(
-      create: (_) => SetupProvider())
+      create: (_) => SetupProvider(sl<StorageController>()))
 
       ],
       child: ScreenUtilInit(

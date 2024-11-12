@@ -12,7 +12,7 @@ final GetIt sl = GetIt.instance;
 void setup() {
   sl.registerLazySingleton(() => const FlutterSecureStorage());
   sl.registerLazySingleton(() => StorageController(sl<FlutterSecureStorage>()));
-  sl.registerLazySingleton<SetupProvider>(() => SetupProvider());
+  sl.registerLazySingleton<SetupProvider>(() => SetupProvider(sl<StorageController>()));
   sl.registerLazySingleton(() => AudioPlayer());
   sl.registerLazySingleton(() => AdhanAudioService(sl<AudioPlayer>()));
   sl.registerLazySingleton(() => PrayerService(sl<AdhanAudioService>()));

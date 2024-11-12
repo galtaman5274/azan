@@ -201,10 +201,13 @@ class _SetupPageState extends State<SetupPage> {
               child: ElevatedButton(
                 onPressed: () {
                   Provider.of<SetupProvider>(context,listen: false).saveSettings(
+                    state: _selectedState as String,
                       latitude: _latitude,
                       longitude: _longitude,
                       selectedCalculationMethod: _selectedCalculationMethod,
-                      asrMethodIndex: _asrMethodIndex,country: _selectedCountry as String,city: _selectedCity as String);
+                      asrMethodIndex: _asrMethodIndex,
+                      country: _selectedCountry as String,
+                      city: _selectedCity as String);
                             Navigator.pushReplacementNamed(context, '/prayer-times');
 
                 },

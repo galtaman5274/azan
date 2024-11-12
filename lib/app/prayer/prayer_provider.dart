@@ -50,10 +50,6 @@ class PrayerTimesNotifier extends ChangeNotifier {
     });
   }
 
-  Future<(String long, String lat)> getLongLat() async {
-    final settings = await _storageController.loadSettings();
-    return (settings['longitude'] ?? '', settings['latitude'] ?? '');
-  }
 
   // Start a timer to check for a new day and reset prayer times if needed
   void _startDayChangeTimer() {
@@ -76,7 +72,7 @@ class PrayerTimesNotifier extends ChangeNotifier {
 
   Future<void> _initializeLocationAndPrayerTimes() async {
     // Fetch stored settings
-    final settings = await _storageController.loadSettings();
+    final settings = await _storageController.loadSettingsForPrayer();
 
     if (settings['latitude'] != null && settings['longitude'] != null) {
       final latitude = double.parse(settings['latitude']!);

@@ -1,26 +1,35 @@
 // providers/setup_provider.dart
 import 'package:adhan/adhan.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:azan/app/services/audio_service.dart';
 import 'package:azan/app/settings/storage_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:country_state_city/country_state_city.dart' as countries_state;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../../domain/location_settings.dart';
 import '../services/location_service.dart';
-import '../services/prayer_service.dart';
 
 class SetupProvider extends ChangeNotifier {
   final LocationService _locationService = LocationService(LocationSettings());
-  final PrayerService _prayerService =
-      PrayerService(AdhanAudioService(AudioPlayer()));
-  final StorageController _storage =
-      StorageController(const FlutterSecureStorage());
-
-  SetupProvider();
+  final StorageController _storage;
+  SetupProvider(this._storage) {
+    _initializeLocations();
+  }
   StorageController get storage => _storage;
   LocationService get locationService => _locationService;
+  Future<void> _initializeLocations() async {
+    // Fetch stored settings
+    final settings = await storage.loadLocationSettings();
+
+    if (settings['country'] != null && settings['city'] != null) {
+      final country = settings['country'];
+      final state = settings['state'];
+
+      final city = settings['city'];
+      locationService.locationSettings.country = country;
+      locationService.locationSettings.city = city;
+      locationService.locationSettings.state = state;
+
+    }
+
+    notifyListeners(); 
+  }
 
   void saveSettings(
       {required String latitude,
@@ -28,10 +37,14 @@ class SetupProvider extends ChangeNotifier {
       required CalculationMethod selectedCalculationMethod,
       required int asrMethodIndex,
       required String country,
-      required String city}) {
+      required String city,
+      required String state}) {
     locationService.locationSettings.country = country;
     locationService.locationSettings.city = city;
     storage.saveSettings(
+        country: country,
+        state: state,
+        city: city,
         latitude: latitude,
         longitude: longitude,
         calculationMethod: selectedCalculationMethod,
