@@ -20,28 +20,6 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-<<<<<<< HEAD
-      body: Row(
-        children: [
-          // Left-side menu, which should fill vertically
-          Container(
-            width: 70,
-            color: Colors.grey[900],
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                _buildMenuItem(Icons.access_time, 'Prayer Adjustments'),
-                _buildMenuItem(Icons.settings, 'App Settings'),
-                _buildMenuItem(Icons.info, 'Tab 3'),
-                // Adding Spacer to push content to fill space
-                const Spacer(),
-              ],
-            ),
-          ),
-          // Content Area, scrollable independently
-          Expanded(
-            child: SingleChildScrollView(
-=======
       body: SingleChildScrollView(
         child: Row(
           children: [
@@ -61,7 +39,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             // Content Area
             Expanded(
->>>>>>> 5af6144 (fist)
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: _buildContent(),
@@ -102,13 +79,9 @@ class _SettingsPageState extends State<SettingsPage> {
     switch (_currentSection) {
       case 'Prayer Adjustments':
         return const PrayerSettingsTab(); // Use the new widget
-<<<<<<< HEAD
       case 'App Settings':
         return const AppSettingsTab();
-=======
-      case 'Tab 2':
-        return const Center(child: Text('Tab 2 Content Here'));
->>>>>>> 5af6144 (fist)
+
       case 'Tab 3':
         return const Center(child: Text('Tab 3 Content Here'));
       default:

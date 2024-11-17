@@ -53,9 +53,9 @@ class _AppState extends State<App> {
           title: 'Azan',
           debugShowCheckedModeBanner: false,
           routes: {
-            '/prayer-times': (context) => const AppStart(),
+            '/': (context) => const AppStart(),
             '/setup': (context) => const SetupPage(),
-            '/': (context) => const ScreenSaver(),
+            '/prayer-times': (context) => const ScreenSaver(),
           },
         ),
       ),

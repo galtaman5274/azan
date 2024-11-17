@@ -73,17 +73,12 @@ class PrayerTimesNotifier extends ChangeNotifier {
     // Fetch stored settings
     final settings = await _storageController.loadSettingsForPrayer();
    double latitude = 40.7128;
-      double longitude = 74.0060;
+       if (settings['latitude'] != null && settings['longitude'] != null) {
+      final latitude = double.parse(settings['latitude']!);
+      final longitude = double.parse(settings['longitude']!);
       final coordinates = Coordinates(latitude, longitude);
-      final params = CalculationMethod.muslim_world_league.getParameters();
-      params.madhab = Madhab.hanafi;
-      _prayerService.prayerTimes = PrayerTimes.today(coordinates, params);
-    if (settings['latitude'] != null && settings['longitude'] != null) {
-      // final latitude = double.parse(settings['latitude']!);
-      // final longitude = double.parse(settings['longitude']!);
-      // final coordinates = Coordinates(latitude, longitude);
-      // final params = _prayerService.calculationMethod.getParameters();
-      // params.madhab = _prayerService.asrMethod;
+      final params = _prayerService.calculationMethod.getParameters();
+      params.madhab = _prayerService.asrMethod;
     
     }
     
