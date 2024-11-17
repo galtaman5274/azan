@@ -10,9 +10,12 @@ class NavigationProvider extends ChangeNotifier {
 
   String get currentScreen => _currentScreen;
   bool get showScreenSaver => _showScreenSaver;
+  void updateImages(List<String> newImages) {
+    screenSaverController?.updateImages(newImages);
+    notifyListeners(); // Notify listeners of the new image list
+  }
 
   void initScreenSaverController(List<String> images, TickerProvider vsync) {
-    // Dispose of the existing ScreenSaverController before creating a new one
     if (screenSaverController != null) {
       screenSaverController!.dispose();
     }

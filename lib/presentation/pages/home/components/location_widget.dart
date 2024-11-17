@@ -7,9 +7,12 @@ class LocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-return Consumer<SetupProvider>(
+    return Consumer<SetupProvider>(
       builder: (context, setup, child) {
-        return Text('${setup.locationService.locationSettings.city} / ${setup.locationService.locationSettings.country}', style: TextStyle(fontSize: 16));
+        return Text(
+            '${setup.locationService.locationSettings.city} / ${setup.locationService.locationSettings.country}',
+            style:const TextStyle(fontSize: 10));
       },
-    );  }
+    );
+  }
 }

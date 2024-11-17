@@ -1,15 +1,16 @@
 import 'package:azan/app/services/prayer_service.dart';
-import 'package:azan/app/settings/storage_controller.dart';
 import 'package:azan/injection.dart';
 import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/main/main_layout.dart';
 import 'package:azan/app/screen_saver/main_provider.dart';
-import 'package:azan/app/prayer/prayer_provider.dart';
+import 'package:azan/app/prayer/prayer_notifier.dart';
 import 'package:azan/app/settings/settings_provider.dart';
 import 'package:azan/presentation/pages/settings/presetup.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'app/services/storage_controller.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -23,6 +24,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   Locale _locale = const Locale('en');
+  Locale get locale => _locale;
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -35,10 +37,11 @@ class _AppState extends State<App> {
       providers: [
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         // ChangeNotifierProvider(create: (_) => TimeDateNotifier()),
-        ChangeNotifierProvider(create: (_) => PrayerTimesNotifier(sl<PrayerService>(),sl<StorageController>())),
         ChangeNotifierProvider(
-      create: (_) => SetupProvider(sl<StorageController>()))
-
+            create: (_) => PrayerTimesNotifier(
+                sl<PrayerService>(), sl<StorageController>())),
+        ChangeNotifierProvider(
+            create: (_) => SetupProvider(sl<StorageController>()))
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -50,9 +53,9 @@ class _AppState extends State<App> {
           title: 'Azan',
           debugShowCheckedModeBanner: false,
           routes: {
-            '/': (context) => const AppStart(),
+            '/prayer-times': (context) => const AppStart(),
             '/setup': (context) => const SetupPage(),
-            '/prayer-times': (context) => const ScreenSaver(),
+            '/': (context) => const ScreenSaver(),
           },
         ),
       ),
@@ -66,7 +69,8 @@ class AppStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<SetupProvider>(context).storage.checkIfSetupRequired(),
+      future:
+          Provider.of<SetupProvider>(context).storage.checkIfSetupRequired(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -83,6 +87,4 @@ class AppStart extends StatelessWidget {
       },
     );
   }
-
-  
 }

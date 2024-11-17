@@ -82,6 +82,11 @@ flutter:
     - assets/audio/adhan.mp3
     - assets/images/
     - assets/fonts/
+    - assets/screen_savers/ar/
+    - assets/screen_savers/de/
+    - assets/screen_savers/tr/
+    - assets/screen_savers/us/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

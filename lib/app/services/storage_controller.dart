@@ -11,6 +11,14 @@ class StorageKeys {
   static const String state = 'state';
 
   static const String city = 'city';
+    static const String fajr = 'fajr';
+  static const String tulu = 'tulu';
+  static const String dhuhr = 'dhuhr';
+  static const String asr = 'asr';
+
+  static const String magrib = 'magrib';
+
+  static const String isha = 'isha';
 }
 
 class StorageController {
@@ -63,15 +71,27 @@ Future<Map<String, String?>> loadLocationSettings() async {
   Future<Map<String, String?>> loadSettingsForPrayer() async {
     final latitude =await getValue(StorageKeys.latitude);
     final longitude = await getValue(StorageKeys.longitude);
-    final calculationMethod =
- await       getValue(StorageKeys.calculationMethod);
+    final calculationMethod = await  getValue(StorageKeys.calculationMethod);
     final asrMethod = await getValue(StorageKeys.asrMethod);
+final fajr =await getValue(StorageKeys.fajr);
+    final tulu = await getValue(StorageKeys.tulu);
+    final dhuhr = await  getValue(StorageKeys.dhuhr);
+    final asr = await getValue(StorageKeys.asr);
+    final magrib =await getValue(StorageKeys.magrib);
+    final isha = await getValue(StorageKeys.isha);
 
     return {
       StorageKeys.latitude: latitude,
       StorageKeys.longitude: longitude,
       StorageKeys.calculationMethod: calculationMethod,
       StorageKeys.asrMethod: asrMethod,
+       StorageKeys.fajr: fajr,
+      StorageKeys.tulu: tulu,
+      StorageKeys.dhuhr: dhuhr,
+      StorageKeys.asr: asr,
+       StorageKeys.magrib: magrib,
+      StorageKeys.isha: isha,
+
     };
   }
 }

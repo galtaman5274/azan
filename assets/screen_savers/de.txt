@@ -1,0 +1,7 @@
+'assets/screen_savers/de/Koran 10-107.jpg',
+'assets/screen_savers/de/Koran 3-150.jpg',
+'assets/screen_savers/de/Koran 3-173.jpg',
+'assets/screen_savers/de/Koran 49-11.jpg',
+'assets/screen_savers/de/Koran 7_55.jpg',
+'assets/screen_savers/de/Sprich gut.jpg',
+'assets/screen_savers/de/Ya Allah, berichtige.jpg',

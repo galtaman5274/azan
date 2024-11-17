@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Abdul Basit",
+    "whereFrom": "Egypt",
+    "description": "Famous for his melodious and powerful recitation.",
+    "qariImage": "assets/qari/abdul_basit.jpeg",
+    "nationalFlag": "assets/qari/egypt_flag.png"
+  },
+  {
+    "name": "Mishary Rashid",
+    "whereFrom": "Kuwait",
+    "description": "Known for his emotional and clear recitation style.",
+    "qariImage": "assets/qari/mishary_rashid.jpeg",
+    "nationalFlag": "assets/qari/kuwait_flag.png"
+  },
+  {
+    "name": "Saad Al-Ghamdi",
+    "whereFrom": "Saudi Arabia",
+    "description": "Renowned for his calming and beautiful recitation.",
+    "qariImage": "assets/qari/saad_al_ghamdi.jpeg",
+    "nationalFlag": "assets/qari/saudi_arabia_flag.png"
+  }
+]

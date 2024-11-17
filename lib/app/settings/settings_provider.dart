@@ -1,9 +1,10 @@
 // providers/setup_provider.dart
 import 'package:adhan/adhan.dart';
-import 'package:azan/app/settings/storage_controller.dart';
 import 'package:flutter/material.dart';
+import '../../app.dart';
 import '../../domain/location_settings.dart';
 import '../services/location_service.dart';
+import '../services/storage_controller.dart';
 
 class SetupProvider extends ChangeNotifier {
   final LocationService _locationService = LocationService(LocationSettings());
@@ -25,10 +26,14 @@ class SetupProvider extends ChangeNotifier {
       locationService.locationSettings.country = country;
       locationService.locationSettings.city = city;
       locationService.locationSettings.state = state;
-
     }
 
-    notifyListeners(); 
+    notifyListeners();
+  }
+
+  void changeLocale(BuildContext context, Locale newLocale) {
+    App.of(context)?.setLocale(newLocale);
+    notifyListeners();
   }
 
   void saveSettings(

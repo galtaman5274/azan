@@ -1,10 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:azan/app/prayer/prayer_provider.dart';
+import 'package:azan/app/prayer/prayer_notifier.dart';
 import 'package:azan/app/services/audio_service.dart';
 import 'package:azan/app/services/prayer_service.dart';
-import 'package:azan/app/settings/storage_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'app/services/storage_controller.dart';
 import 'app/settings/settings_provider.dart';
 
 final GetIt sl = GetIt.instance;

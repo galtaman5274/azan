@@ -1,3 +1,4 @@
+import 'package:azan/app.dart';
 import 'package:azan/presentation/pages/adhan/adhan_page.dart';
 import 'package:azan/presentation/pages/home/home_page.dart';
 import 'package:azan/presentation/pages/settings/settings_screen.dart';
@@ -24,7 +25,7 @@ class _ScreenSaverState extends State<ScreenSaver>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<NavigationProvider>(context, listen: false)
           .initScreenSaverController(
-              Images.getImages(const Locale('en')), this);
+              Images.getImages(App.of(context)!.locale), this);
     });
   }
 

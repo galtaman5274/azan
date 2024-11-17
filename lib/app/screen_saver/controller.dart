@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ScreenSaverController extends ChangeNotifier {
 
 
-  final List<String> images;
+  List<String> images;
   final TickerProvider vsync;
   final VoidCallback onShowScreenSaver;
   final VoidCallback onHideScreenSaver;
@@ -22,7 +22,14 @@ class ScreenSaverController extends ChangeNotifier {
   String _currentAnimationType = 'fade';
   int _currentIndex = 0;
   final Random _random = Random();
-
+// New function to update the images list
+  void updateImages(List<String> newImages) {
+    images = newImages;
+    _currentIndex = 0; // Reset the current index to the beginning
+    _setRandomAnimation();
+    _animationController.reset(); // Reset any current animation
+    _startImageChange(); // Restart the image change timer if needed
+  }
   Animation<double> get currentAnimation => _currentAnimation;
   String get currentAnimationType => _currentAnimationType;
   int get currentIndex => _currentIndex;

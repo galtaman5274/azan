@@ -27,7 +27,7 @@ class MainButton extends StatelessWidget {
       },
       child: Container(
         width: 30.w, // Set the desired width of the button
-        height: 80.h, // Set the desired height of the button
+        height: 60.h, // Set the desired height of the button
         decoration: BoxDecoration(
           image: DecorationImage(
             image:

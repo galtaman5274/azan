@@ -9,7 +9,7 @@ class PrayerService {
   String _currentTime = '';
   String _currentDate = '';
   String _timeLeftForNextPrayer = '';
-  late final PrayerSettings prayerSettings;
+  final PrayerSettings prayerSettings = PrayerSettings();
   Madhab asrMethod = Madhab.hanafi;
   CalculationMethod calculationMethod = CalculationMethod.muslim_world_league;
   PrayerTimes? prayerTimes;
@@ -69,10 +69,19 @@ class PrayerService {
     }
   }
 
-  String getPrayerTime(Prayer prayer) {
+  String getPrayerTime(Prayer prayer, String minutes) {
     if (prayerTimes == null) return '';
+
+    // Parse the minutes from the input string
+    int additionalMinutes = int.tryParse(minutes) ?? 0;
+
+    // Get the prayer time
     final DateTime time = prayerTimes!.timeForPrayer(prayer)!;
-    return DateFormat.Hm().format(time);
+    // Add the additional minutes to the prayer time
+    final DateTime adjustedTime =
+        time.add(Duration(minutes: additionalMinutes));
+    // Format the adjusted time and return as string
+    return DateFormat.Hm().format(adjustedTime);
   }
 
   void updateCurrentTimeAndTimeLeft() {

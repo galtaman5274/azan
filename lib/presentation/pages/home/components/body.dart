@@ -7,10 +7,8 @@ import 'package:azan/presentation/pages/home/components/time_widgets.dart';
 import 'package:azan/presentation/pages/home/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:provider/provider.dart';
-
-import '../../../../app/prayer/prayer_provider.dart';
+import '../../../../app/prayer/prayer_notifier.dart';
 
 class PrayerTimeScreenLandscape extends StatelessWidget {
   const PrayerTimeScreenLandscape({super.key});
@@ -35,23 +33,23 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                   width: double.infinity,
                 ),
                 Positioned(
-                  right: -104.w,
-                  top: 0,
+                  right: -54.w,
+                  top: 60,
                   child: Image.asset(
                     Assets.clockFrame,
                     fit: BoxFit.contain,
-                    height: 350.h,
-                    width: 350.w,
+                    height: 250.h,
+                    width: 250.w,
                   ),
                 ),
-               const LocationWidget(),
+                const Positioned(right: 0, bottom: 0, child: LocationWidget()),
                 Positioned(
-                    right: 50.w, top: 110.h, child: const CurrentTimeWidget()),
+                    right: 58.w, top: 140.h, child: const CurrentTimeWidget()),
                 Positioned(
-                    right: 58.w, top: 210.h, child: const TimeLeftWidget()),
+                    right: 63.w, top: 220.h, child: const TimeLeftWidget()),
                 Positioned(
-                    right: 220.w,
-                    bottom: 22.h,
+                    right: 227.dg,
+                    bottom: 10.dg,
                     child: const CurrentDateWidget()),
                 Positioned(
                   right: 50.w,
