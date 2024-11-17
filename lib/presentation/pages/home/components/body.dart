@@ -18,7 +18,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PrayerTimesNotifier>(
       builder: (context, notifier, _) {
-        return notifier.prayerTimes
+        return !notifier.prayerTimes
             ? const Center(child: CircularProgressIndicator())
             : Stack(children: [
                 Image.asset(
