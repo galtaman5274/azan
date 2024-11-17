@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Prayer Time Item Widget
 class PrayerTimeItemWidget extends StatelessWidget {
@@ -16,8 +17,8 @@ class PrayerTimeItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80,
-      height: 55,
+      width: 150,
+      height: 100,
       decoration: BoxDecoration(
         color: hasPassed ? Colors.grey : Colors.white, // Change color if prayer has passed
         borderRadius: BorderRadius.circular(12.0),

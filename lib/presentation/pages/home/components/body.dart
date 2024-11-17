@@ -8,7 +8,7 @@ import 'package:azan/presentation/pages/home/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../../../app/prayer/prayer_notifier.dart';
+import '../../../../app/prayer/prayer_provider.dart';
 
 class PrayerTimeScreenLandscape extends StatelessWidget {
   const PrayerTimeScreenLandscape({super.key});
@@ -43,6 +43,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                   ),
                 ),
                 const Positioned(right: 0, bottom: 0, child: LocationWidget()),
+
                 Positioned(
                     right: 58.w, top: 140.h, child: const CurrentTimeWidget()),
                 Positioned(
