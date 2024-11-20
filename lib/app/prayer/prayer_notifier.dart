@@ -72,14 +72,13 @@ class PrayerTimesNotifier extends ChangeNotifier {
   Future<void> _initializeLocationAndPrayerTimes() async {
     // Fetch stored settings
     final settings = await _storageController.loadSettingsForPrayer();
-   double latitude = 40.7128;
        if (settings['latitude'] != null && settings['longitude'] != null) {
       final latitude = double.parse(settings['latitude']!);
       final longitude = double.parse(settings['longitude']!);
       final coordinates = Coordinates(latitude, longitude);
       final params = _prayerService.calculationMethod.getParameters();
       params.madhab = _prayerService.asrMethod;
-    
+    _prayerService.prayerTimes = PrayerTimes.today(coordinates, params);
     }
     
       _prayerService.prayerSettings.fajr = settings[StorageKeys.fajr] ?? '0';
