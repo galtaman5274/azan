@@ -9,27 +9,26 @@ import 'package:azan/presentation/pages/settings/presetup.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'app/services/storage_controller.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
-  static _AppState? of(BuildContext context) {
-    return context.findAncestorStateOfType<_AppState>();
-  }
+  // static _AppState? of(BuildContext context) {
+  //   return context.findAncestorStateOfType<_AppState>();
+  // }
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  Locale _locale = const Locale('en');
-  Locale get locale => _locale;
-  void setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
+  // Locale _locale = const Locale('en');
+  // Locale get locale => _locale;
+  // void setLocale(Locale locale) {
+  //   setState(() {
+  //     _locale = locale;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +45,20 @@ class _AppState extends State<App> {
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true, // Optional: Enable text adaptation
-        builder: (_, child) => MaterialApp(
-          supportedLocales: AppLocalizations.supportedLocales,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          locale: _locale, // Current locale (set by the user or system)
-          title: 'Azan',
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/': (context) => const AppStart(),
-            '/setup': (context) => const SetupPage(),
-            '/prayer-times': (context) => const ScreenSaver(),
-          },
+        builder: (_, child) => Consumer<SetupProvider>(
+          builder: ( context, provider, _) {
+          return MaterialApp(
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: provider.locale, // Current locale (set by the user or system)
+            title: 'Azan',
+            debugShowCheckedModeBanner: false,
+            routes: {
+              '/': (context) => const AppStart(),
+              '/setup': (context) => const SetupPage(),
+              '/prayer-times': (context) => const ScreenSaver(),
+            },
+          );}
         ),
       ),
     );

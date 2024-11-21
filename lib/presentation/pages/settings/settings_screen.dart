@@ -2,20 +2,21 @@ import 'package:azan/presentation/pages/settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/screen_saver/main_provider.dart';
+import '../../../app/settings/settings_provider.dart';
 import 'prayer_settings.dart'; // Import the new tab
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class SettingsPage extends StatelessWidget {
+  SettingsPage({super.key});
+final List<Widget> menuItems = [
+  const MenuItem(  icon:Icons.access_time, section: 'Prayer Adjustments',index: 0,),
+  const MenuItem(  icon:Icons.settings, section: 'App Settings',index: 1,),
 
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  String _currentSection = 'Prayer Adjustments';
-
+  const MenuItem(  icon:Icons.info, section: 'tap',index: 2,),
+];
+final List<Widget> menuContent = [ PrayerSettingsTab(),const AppSettingsTab(),const Center(child: Text('tap'),)];
   @override
   Widget build(BuildContext context) {
+    final index = context.watch<SetupProvider>().currentIndex;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -31,61 +32,45 @@ class _SettingsPageState extends State<SettingsPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  _buildMenuItem(Icons.access_time, 'Prayer Adjustments'),
-                  _buildMenuItem(Icons.settings, 'Tab 2'),
-                  _buildMenuItem(Icons.info, 'Tab 3'),
+                  ...menuItems
                 ],
               ),
             ),
             // Content Area
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: _buildContent(),
+              child:  IndexedStack(
+                index: index,
+                children: menuContent,
               ),
+
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Use Provider to navigate back to home
-          Provider.of<NavigationProvider>(context, listen: false)
-              .navigateTo('home');
-        },
-        child: const Icon(Icons.home),
+        onPressed: () => context.read<NavigationProvider>().navigateTo('home'),
         tooltip: 'Go to Home',
+        child: const Icon(Icons.home),
       ),
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String section) {
+}
+class MenuItem extends StatelessWidget {
+  const MenuItem({super.key,required this.icon, required this.section,required this.index});
+final IconData icon;
+final String section;
+final int index;
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: IconButton(
         icon: Icon(icon),
-        color: _currentSection == section ? Colors.blue : Colors.white,
+        color: context.read<SetupProvider>().currentIndex == index ? Colors.blue : Colors.white,
         iconSize: 30.0,
-        onPressed: () {
-          setState(() {
-            _currentSection = section;
-          });
-        },
+        onPressed: () =>context.read<SetupProvider>().setCurrentIndex(index),
       ),
     );
-  }
-
-  Widget _buildContent() {
-    switch (_currentSection) {
-      case 'Prayer Adjustments':
-        return const PrayerSettingsTab(); // Use the new widget
-      case 'App Settings':
-        return const AppSettingsTab();
-
-      case 'Tab 3':
-        return const Center(child: Text('Tab 3 Content Here'));
-      default:
-        return const Center(child: Text('Content not found'));
-    }
   }
 }

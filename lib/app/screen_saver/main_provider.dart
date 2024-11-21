@@ -6,6 +6,7 @@ import 'controller.dart';
 class NavigationProvider extends ChangeNotifier {
   String _currentScreen = 'home';
   bool _showScreenSaver = false;
+
   ScreenSaverController? screenSaverController;
 
   String get currentScreen => _currentScreen;

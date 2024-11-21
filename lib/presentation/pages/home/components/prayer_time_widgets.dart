@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Prayer Time Item Widget
 class PrayerTimeItemWidget extends StatelessWidget {

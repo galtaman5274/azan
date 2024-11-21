@@ -1,4 +1,7 @@
-import 'package:azan/app.dart';
+import 'package:adhan/adhan.dart';
+import 'package:azan/app/prayer/prayer_notifier.dart';
+import 'package:azan/app/settings/settings_provider.dart';
+import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/adhan/adhan_page.dart';
 import 'package:azan/presentation/pages/home/home_page.dart';
 import 'package:azan/presentation/pages/settings/settings_screen.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/screen_saver/controller.dart';
 import '../../../app/screen_saver/main_provider.dart';
+import '../home/components/prayer_time_widgets.dart';
 part 'constants.dart';
 
 class ScreenSaver extends StatefulWidget {
@@ -25,7 +29,7 @@ class _ScreenSaverState extends State<ScreenSaver>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<NavigationProvider>(context, listen: false)
           .initScreenSaverController(
-              Images.getImages(App.of(context)!.locale), this);
+              Images.getImages(Provider.of<SetupProvider>(context,listen: false).locale), this);
     });
   }
 
@@ -47,7 +51,7 @@ class _ScreenSaverState extends State<ScreenSaver>
                 builder: (context, provider, _) {
                   switch (provider.currentScreen) {
                     case 'settings':
-                      return const SettingsPage();
+                      return  SettingsPage();
                     case 'adhan':
                       return const AdhanPage();
                     case 'home':
@@ -114,6 +118,30 @@ class _ScreenSaverState extends State<ScreenSaver>
             ),
           ),
         ),
+
+            Consumer<PrayerTimesNotifier>(
+              builder: (context, provider, _) {
+              return Row(
+                children: [
+                  PrayerTimeItemWidget(
+                    prayerName: context.l10n.prayerAsr,
+                    prayerTime: provider.getPrayerTime(Prayer.asr),
+                    hasPassed: provider.prayerSevice.prayerPassed[3],
+                  ),
+                  PrayerTimeItemWidget(
+                    prayerName: context.l10n.prayerMaghrib,
+                    prayerTime: provider.getPrayerTime(Prayer.maghrib),
+                    hasPassed: provider.prayerSevice.prayerPassed[4],
+                  ),
+                  PrayerTimeItemWidget(
+                    prayerName: context.l10n.prayerIsha,
+                    prayerTime: provider.getPrayerTime(Prayer.isha),
+                    hasPassed: provider.prayerSevice.prayerPassed[5],
+                  ),
+                ],
+              );
+            },)
+
       ],
     );
   }

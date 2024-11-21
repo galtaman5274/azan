@@ -3,7 +3,6 @@ import 'package:azan/app/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/screen_saver/controller.dart';
 import '../../../app/screen_saver/main_provider.dart';
 import '../../localization/localization.dart';
 import '../main/main_layout.dart';
@@ -27,18 +26,16 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
             ),
             const SizedBox(height: 20),
             DropdownButton<Locale>(
-              value: App.of(context)?.locale,
+              value: context.watch<SetupProvider>().locale,
               onChanged: (Locale? newLocale) {
                 if (newLocale != null) {
-                        Provider.of<SetupProvider>(context, listen: false).changeLocale(context, newLocale);
+                        Provider.of<SetupProvider>(context, listen: false).setLocale(newLocale);
 
                 }
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<NavigationProvider>(context, listen: false).updateImages(Images.getImages(App.of(context)!.locale));
+      Provider.of<NavigationProvider>(context, listen: false).updateImages(Images.getImages(newLocale ??const Locale('en')));
     });
-                setState(() {
-                  
-                });
+
               },
               items: AppLocalizations.supportedLocales.map((locale) {
                 return DropdownMenuItem(

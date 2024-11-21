@@ -18,7 +18,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PrayerTimesNotifier>(
       builder: (context, notifier, _) {
-        return !notifier.prayerTimes
+        return notifier.prayerTimes
             ? const Center(child: CircularProgressIndicator())
             : Stack(children: [
                 Image.asset(
@@ -114,23 +114,24 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                       img: 'bg_close',
                       text: context.l10n.homeButtonClose,
                       turnOff: true,
+                      nav: 'close',
                     )),
                 Positioned(
                     left: 0,
                     bottom: 150.h,
                     child: MainButton(
-                        img: 'azan_frame', text: context.l10n.homeButtonAdhan)),
+                        img: 'azan_frame', text: context.l10n.homeButtonAdhan,nav: 'adhan',)),
                 Positioned(
                     left: 20.w,
                     bottom: 75.h,
                     child: MainButton(
-                        img: 'bg_quran', text: context.l10n.homeButtonQuran)),
+                        img: 'bg_quran', text: context.l10n.homeButtonQuran,nav: 'quran',)),
                 Positioned(
                     left: 50.w,
                     bottom: 25.h,
                     child: MainButton(
                         img: 'bg_settings',
-                        text: context.l10n.homeButtonSettings)),
+                        text: context.l10n.homeButtonSettings,nav: 'settings',)),
               ]);
       },
     );

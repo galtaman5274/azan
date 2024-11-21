@@ -8,12 +8,11 @@ class MainButton extends StatelessWidget {
   final String text;
   final double size;
   const MainButton(
-      {Key? key,
+      {super.key,
       required this.onPressed,
       required this.color,
       required this.text,
-      required this.size})
-      : super(key: key);
+      required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +34,14 @@ class SettingsButton extends StatelessWidget {
   final int value;
   final String setting;
   final CallbackSetting callback;
-  SettingsButton(
-      this.color, this.text, this.value, this.setting, this.callback);
+  const SettingsButton(
+      this.color, this.text, this.value, this.setting, this.callback, {super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      child: Text(this.text, style: TextStyle(color: Colors.white)),
-      onPressed: () => this.callback(this.setting, this.value),
-      color: this.color,
+      onPressed: () => callback(setting, value),
+      color: color,
+      child: Text(text, style: const TextStyle(color: Colors.white)),
     );
   }
 }

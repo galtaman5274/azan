@@ -9,6 +9,20 @@ import '../services/storage_controller.dart';
 class SetupProvider extends ChangeNotifier {
   final LocationService _locationService = LocationService(LocationSettings());
   final StorageController _storage;
+  Locale _locale = const Locale('en');
+
+  Locale get locale => _locale;
+  int _currentIndex = 0;
+  int get currentIndex => _currentIndex;
+  void setCurrentIndex (int index){
+    _currentIndex = index;
+    notifyListeners();
+  }
+
+  void setLocale(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
   SetupProvider(this._storage) {
     _initializeLocations();
   }
@@ -31,10 +45,10 @@ class SetupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeLocale(BuildContext context, Locale newLocale) {
-    App.of(context)?.setLocale(newLocale);
-    notifyListeners();
-  }
+  // void changeLocale(BuildContext context, Locale newLocale) {
+  //   App.of(context)?.setLocale(newLocale);
+  //   notifyListeners();
+  // }
 
   void saveSettings(
       {required String latitude,

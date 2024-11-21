@@ -22,6 +22,7 @@ class BackgroundImageService extends ChangeNotifier {
     });
   }
 
+  @override
   void dispose() {
     _imageChangeTimer?.cancel();
   }

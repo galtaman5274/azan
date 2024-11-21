@@ -1,4 +1,3 @@
-import 'package:azan/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +8,9 @@ class MainButton extends StatelessWidget {
   final String img;
   final String text;
   final bool turnOff;
+  final String nav;
   const MainButton(
-      {super.key, required this.img, required this.text, this.turnOff = false});
+      {super.key, required this.img, required this.text, this.turnOff = false,required this.nav});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MainButton extends StatelessWidget {
         } else {
           final provider =
               Provider.of<NavigationProvider>(context, listen: false);
-          provider.navigateTo(text);
+          provider.navigateTo(nav);
           provider.screenSaverController?.resetInactivityTimer();
         }
       },

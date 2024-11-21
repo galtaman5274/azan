@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
-class PrayerSettingsTab extends StatefulWidget {
-  const PrayerSettingsTab({super.key});
+class PrayerSettingsTab extends StatelessWidget {
+   PrayerSettingsTab({super.key});
 
-  @override
-  _PrayerSettingsTabState createState() => _PrayerSettingsTabState();
-}
-
-class _PrayerSettingsTabState extends State<PrayerSettingsTab> {
-  Map<String, String> prayerAdjustments = {
+   Map<String, String> prayerAdjustments = {
     'fajr': '0',
     'tulu': '0',
     'dhuhr': '0',
@@ -19,13 +14,7 @@ class _PrayerSettingsTabState extends State<PrayerSettingsTab> {
     'magrib': '0',
     'isha': '0'
   };
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

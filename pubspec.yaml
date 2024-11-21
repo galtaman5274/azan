@@ -81,7 +81,6 @@ flutter:
   assets:
     - assets/audio/adhan.mp3
     - assets/images/
-    - assets/fonts/
     - assets/screen_savers/ar/
     - assets/screen_savers/de/
     - assets/screen_savers/tr/

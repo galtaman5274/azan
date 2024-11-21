@@ -41,7 +41,7 @@ class AppTextTheme {
         fontFamily: 'Macondo', fontSize: 15, color: AppColors.primaryDark),
   );
 
-  static TextTheme darkTextTheme = TextTheme(
+  static TextTheme darkTextTheme = const TextTheme(
     labelMedium: TextStyle(
         fontFamily: 'Macondo',
         fontSize: 20,
