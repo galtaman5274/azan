@@ -22,7 +22,7 @@ class MainButton extends StatelessWidget {
           final provider =
               Provider.of<NavigationProvider>(context, listen: false);
           provider.navigateTo(nav);
-          provider.screenSaverController?.resetInactivityTimer();
+          provider.resetInactivityTimer();
         }
       },
       child: Container(

@@ -56,6 +56,8 @@ dependencies:
   dropdown_search: ^6.0.1
   audioplayers: ^6.1.0
   get_it: ^8.0.2
+  flutter_bloc: ^8.1.6
+  path_provider: ^2.1.5
 
 
 dev_dependencies:
@@ -85,6 +87,8 @@ flutter:
     - assets/screen_savers/de/
     - assets/screen_savers/tr/
     - assets/screen_savers/us/
+    - assets/qari/
+    - assets/qari.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

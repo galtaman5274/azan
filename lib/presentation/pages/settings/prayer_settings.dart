@@ -1,6 +1,7 @@
+import 'package:azan/app.dart';
 import 'package:azan/app/prayer/prayer_notifier.dart';
+import 'package:azan/presentation/localization/localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 class PrayerSettingsTab extends StatelessWidget {
@@ -18,6 +19,14 @@ class PrayerSettingsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, String> prayerAdjustmentsLocalization = {
+      'fajr': context.l10n.prayerFajr,
+      'tulu': context.l10n.prayerTulu,
+      'dhuhr': context.l10n.prayerDhuhr,
+      'asr': context.l10n.prayerAsr,
+      'magrib': context.l10n.prayerMaghrib,
+      'isha': context.l10n.prayerIsha
+    };
     return Consumer<PrayerTimesNotifier>(
       builder: (context, provider, _) {
          return Column(
@@ -34,7 +43,7 @@ class PrayerSettingsTab extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      prayer.toUpperCase(),
+                      prayerAdjustmentsLocalization[prayer]!.toUpperCase(),
                       style: const TextStyle(fontSize: 16),
                     ),
                     SizedBox(

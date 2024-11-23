@@ -50,8 +50,8 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                 Positioned(
                     right: 63.w, top: 220.h, child: const TimeLeftWidget()),
                 Positioned(
-                    right: 227.dg,
-                    bottom: 10.dg,
+                    right: 240.dg,
+                    bottom: 8.dg,
                     child: const CurrentDateWidget()),
                 Positioned(
                   right: 50.w,

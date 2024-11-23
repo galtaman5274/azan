@@ -39,29 +39,33 @@ class ScreenSaverController extends ChangeNotifier {
     required this.vsync,
     required this.onShowScreenSaver,
     required this.onHideScreenSaver,
+    required int animationDuration,
+    required int inactivityTime
   }) {
-    _initAnimationController();
-    _startInactivityTimer();
+    _initAnimationController(animationDuration);
+    _startInactivityTimer(inactivityTime);
     _startImageChange();
   }
 
-  void _initAnimationController() {
+
+
+  void _initAnimationController(int animationDuration ) {
     _animationController = AnimationController(
       vsync: vsync,
-      duration: const Duration(seconds: 30),
+      duration:  Duration(seconds: animationDuration),
     );
     _setRandomAnimation();
   }
 
-  void _startInactivityTimer() {
+  void _startInactivityTimer(int inactivityTime) {
     _inactivityTimer?.cancel();
-    _inactivityTimer = Timer(const Duration(seconds: 50),
+    _inactivityTimer = Timer( Duration(seconds: inactivityTime),
         _showSaver); // Set duration to 5 seconds for testing
   }
 
-  void resetInactivityTimer() {
+  void resetInactivityTimer(int inactivityTime) {
     onHideScreenSaver(); // Hide the screen saver when interaction happens
-    _startInactivityTimer();
+    _startInactivityTimer(inactivityTime);
   }
 
   void _showSaver() {

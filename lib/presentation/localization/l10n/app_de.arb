@@ -12,5 +12,11 @@
     "timeLeftText": "Verbleibend",
     "video": "Video",
     "theory": "Theorie",
-    "practice": "Praxis"
+    "practice": "Praxis",
+    "prayerSettings": "Gebetseinstellungen",
+      "appSettings": "App-Einstellungen",
+      "quranSettings": "Koran-Einstellungen",
+      "locationSettings": "Standorteinstellungen",
+      "settings": "Einstellungen",
+      "systemLanguage": "Systemsprache"
 }

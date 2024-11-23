@@ -9,25 +9,25 @@ class QariBloc extends Bloc<QariEvent, QariState> {
 
   QariBloc({required this.fileHandler}) : super(QariInitial()) {
     on<LoadQariList>(_onLoadQariList);
-    on<SaveQariList>(_onSaveQariList);
+    //on<SaveQariList>(_onSaveQariList);
   }
 
   Future<void> _onLoadQariList(LoadQariList event, Emitter<QariState> emit) async {
     emit(QariLoading());
     try {
-      final qariList = await fileHandler.readFromFile(event.filePath);
+      final qariList = await fileHandler.readFromFile();
       emit(QariLoaded(qariList));
     } catch (e) {
       emit(QariError('Failed to load Qari list: ${e.toString()}'));
     }
   }
 
-  Future<void> _onSaveQariList(SaveQariList event, Emitter<QariState> emit) async {
-    try {
-      await fileHandler.writeToFile(event.filePath, event.qariList);
-      emit(QariLoaded(event.qariList));
-    } catch (e) {
-      emit(QariError('Failed to save Qari list: ${e.toString()}'));
-    }
-  }
+  // Future<void> _onSaveQariList(SaveQariList event, Emitter<QariState> emit) async {
+  //   try {
+  //     await fileHandler.writeToFile( event.qariList);
+  //     emit(QariLoaded(event.qariList));
+  //   } catch (e) {
+  //     emit(QariError('Failed to save Qari list: ${e.toString()}'));
+  //   }
+  // }
 }

@@ -1,3 +1,4 @@
+import 'package:azan/app/quran/events.dart';
 import 'package:azan/app/services/prayer_service.dart';
 import 'package:azan/injection.dart';
 import 'package:azan/presentation/localization/localization.dart';
@@ -6,10 +7,13 @@ import 'package:azan/app/screen_saver/main_provider.dart';
 import 'package:azan/app/prayer/prayer_notifier.dart';
 import 'package:azan/app/settings/settings_provider.dart';
 import 'package:azan/presentation/pages/settings/presetup.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'app/quran/bloc.dart';
 import 'app/services/storage_controller.dart';
+import 'infrastucture/quran/repo.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -22,19 +26,14 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  // Locale _locale = const Locale('en');
-  // Locale get locale => _locale;
-  // void setLocale(Locale locale) {
-  //   setState(() {
-  //     _locale = locale;
-  //   });
-  // }
+  final qariFileHandler = QariFileHandlerImpl();
+
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => NavigationProvider(sl<StorageController>())..init()),
         // ChangeNotifierProvider(create: (_) => TimeDateNotifier()),
         ChangeNotifierProvider(
             create: (_) => PrayerTimesNotifier(
@@ -47,17 +46,21 @@ class _AppState extends State<App> {
         minTextAdapt: true, // Optional: Enable text adaptation
         builder: (_, child) => Consumer<SetupProvider>(
           builder: ( context, provider, _) {
-          return MaterialApp(
-            supportedLocales: AppLocalizations.supportedLocales,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            locale: provider.locale, // Current locale (set by the user or system)
-            title: 'Azan',
-            debugShowCheckedModeBanner: false,
-            routes: {
-              '/': (context) => const AppStart(),
-              '/setup': (context) => const SetupPage(),
-              '/prayer-times': (context) => const ScreenSaver(),
-            },
+          return BlocProvider(
+            create: (context) => QariBloc(fileHandler: qariFileHandler)..add(LoadQariList()),
+
+            child: MaterialApp(
+              supportedLocales: AppLocalizations.supportedLocales,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              locale: provider.locale, // Current locale (set by the user or system)
+              title: 'Azan',
+              debugShowCheckedModeBanner: false,
+              routes: {
+                '/': (context) => const AppStart(),
+                '/setup': (context) => const SetupPage(),
+                '/prayer-times': (context) => const ScreenSaver(),
+              },
+            ),
           );}
         ),
       ),

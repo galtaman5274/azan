@@ -4,5 +4,6 @@ output-localization-file: app_localizations.dart
 untranslated-messages-file: untranslated_messages.txt
 preferred-supported-locales:
   - en
-  - ru
   - tr
+  - ar
+  - de

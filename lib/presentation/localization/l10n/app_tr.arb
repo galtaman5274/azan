@@ -12,5 +12,11 @@
     "timeLeftText": "Kalan",
     "video": "Video",
     "theory": "Teori",
-    "practice": "Pratik"
+    "practice": "Pratik",
+    "prayerSettings": "Namaz Ayarları",
+      "appSettings": "Uygulama Ayarları",
+      "quranSettings": "Kur'an Ayarları",
+      "locationSettings": "Konum Ayarları",
+      "settings": "Ayarlar",
+      "systemLanguage": "Sistem Dili"
 }

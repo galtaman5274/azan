@@ -1,49 +1,28 @@
+import 'package:azan/app.dart';
+import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/screen_saver/main_provider.dart';
 import '../../../app/settings/settings_provider.dart';
+import 'location_settings.dart';
 import 'prayer_settings.dart'; // Import the new tab
 
 class SettingsPage extends StatelessWidget {
-  SettingsPage({super.key});
-final List<Widget> menuItems = [
-  const MenuItem(  icon:Icons.access_time, section: 'Prayer Adjustments',index: 0,),
-  const MenuItem(  icon:Icons.settings, section: 'App Settings',index: 1,),
+  const SettingsPage({super.key});
 
-  const MenuItem(  icon:Icons.info, section: 'tap',index: 2,),
-];
-final List<Widget> menuContent = [ PrayerSettingsTab(),const AppSettingsTab(),const Center(child: Text('tap'),)];
   @override
   Widget build(BuildContext context) {
-    final index = context.watch<SetupProvider>().currentIndex;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title:  Text(context.l10n.settings),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Row(
           children: [
             // Left-side menu
-            Container(
-              width: 70,
-              color: Colors.grey[900],
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  ...menuItems
-                ],
-              ),
-            ),
-            // Content Area
-            Expanded(
-              child:  IndexedStack(
-                index: index,
-                children: menuContent,
-              ),
-
-            ),
+             LeftMenu(),
+            Content(),
           ],
         ),
       ),
@@ -65,11 +44,58 @@ final int index;
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: IconButton(
-        icon: Icon(icon),
-        color: context.read<SetupProvider>().currentIndex == index ? Colors.blue : Colors.white,
-        iconSize: 30.0,
-        onPressed: () =>context.read<SetupProvider>().setCurrentIndex(index),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(icon),
+            color: context.read<SetupProvider>().currentIndex == index ? Colors.blue : Colors.white,
+            iconSize: 30.0,
+            onPressed: () =>context.read<SetupProvider>().setCurrentIndex(index),
+          ),
+          TextButton(onPressed: () =>context.read<SetupProvider>().setCurrentIndex(index), child: Text(section,style:const TextStyle(color: Colors.white),)),
+
+        ],
+      ),
+    );
+  }
+}
+class Content extends StatelessWidget {
+  const Content({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final index = context.watch<SetupProvider>().currentIndex;
+
+    return Expanded(
+      child:  Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: IndexedStack(
+          index: index,
+          children: [ PrayerSettingsTab(),const AppSettingsTab(),const Center(child: Text('tap'),),const SetupLocation()],
+        ),
+      ),
+    );
+  }
+}
+
+class LeftMenu extends StatelessWidget {
+  const LeftMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 250,
+      height: MediaQuery.of(context).size.height,
+      color: Colors.grey[900],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          MenuItem(  icon:Icons.access_time, section: context.l10n.prayerSettings,index: 0,),
+           MenuItem(  icon:Icons.settings, section: context.l10n.appSettings,index: 1,),
+           MenuItem(  icon:Icons.book, section: context.l10n.quranSettings,index: 2,),
+           MenuItem(  icon:Icons.location_on_outlined, section: context.l10n.locationSettings,index: 3,),
+        ],
       ),
     );
   }

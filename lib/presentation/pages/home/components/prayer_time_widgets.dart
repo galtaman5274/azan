@@ -34,10 +34,12 @@ class PrayerTimeItemWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 10.0),
+
             Text(
               prayerName,
               style:  TextStyle(
-                fontSize: 12,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               color: hasPassed ? Colors.grey : Colors.orange, // Optional: Change text color
               ),
@@ -46,7 +48,7 @@ class PrayerTimeItemWidget extends StatelessWidget {
             Text(
               prayerTime,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 20,
                 color: Colors.brown, // Text color for better visibility
               ),
             ),
