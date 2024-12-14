@@ -6,6 +6,12 @@
 <string>We need your location to provide better services.</string>
 <key>NSLocationAlwaysUsageDescription</key>
 <string>We need your location to provide better services.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to select an image.</string>
+<key>NSCameraUsageDescription</key>
+<string>We need access to your camera to take pictures.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need access to save photos.</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

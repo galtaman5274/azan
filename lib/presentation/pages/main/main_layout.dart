@@ -1,4 +1,5 @@
 import 'package:adhan/adhan.dart';
+import 'package:azan/app/locale_provider/locale_provider.dart';
 import 'package:azan/app/prayer/prayer_notifier.dart';
 import 'package:azan/app/settings/settings_provider.dart';
 import 'package:azan/presentation/localization/localization.dart';
@@ -6,6 +7,7 @@ import 'package:azan/presentation/pages/adhan/adhan_page.dart';
 import 'package:azan/presentation/pages/home/home_page.dart';
 import 'package:azan/presentation/pages/quran/quran.dart';
 import 'package:azan/presentation/pages/settings/settings_screen.dart';
+import 'package:azan/quran/quran_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/screen_saver/controller.dart';
@@ -30,7 +32,7 @@ class _ScreenSaverState extends State<ScreenSaver>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<NavigationProvider>(context, listen: false)
           .initScreenSaverController(
-              Images.getImages(Provider.of<SetupProvider>(context,listen: false).locale), this);
+              Images.getImages(Provider.of<LocaleProvider>(context,listen: false).locale), this);
     });
   }
 
@@ -57,7 +59,7 @@ class _ScreenSaverState extends State<ScreenSaver>
                     case 'home':
                       return const HomePage();
                     case 'quran':
-                      return const QariScreen(filePath: 'assets/qari.json');
+                      return const QuranPage();
                     default:
                       return const HomePage();
                   }
@@ -131,32 +133,32 @@ class _ScreenSaverState extends State<ScreenSaver>
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerFajr,
                       prayerTime: provider.getPrayerTime(Prayer.fajr),
-                      hasPassed: provider.prayerSevice.prayerPassed[0],
+                      hasPassed: provider.prayerPassed[0],
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerTulu,
                       prayerTime: provider.getPrayerTime(Prayer.sunrise),
-                      hasPassed: provider.prayerSevice.prayerPassed[1],
+                      hasPassed: provider.prayerPassed[1],
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerDhuhr,
                       prayerTime: provider.getPrayerTime(Prayer.dhuhr),
-                      hasPassed: provider.prayerSevice.prayerPassed[2],
+                      hasPassed: provider.prayerPassed[2],
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerAsr,
                       prayerTime: provider.getPrayerTime(Prayer.asr),
-                      hasPassed: provider.prayerSevice.prayerPassed[3],
+                      hasPassed: provider.prayerPassed[3],
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerMaghrib,
                       prayerTime: provider.getPrayerTime(Prayer.maghrib),
-                      hasPassed: provider.prayerSevice.prayerPassed[4],
+                      hasPassed: provider.prayerPassed[4],
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerIsha,
                       prayerTime: provider.getPrayerTime(Prayer.isha),
-                      hasPassed: provider.prayerSevice.prayerPassed[5],
+                      hasPassed: provider.prayerPassed[5],
                     ),
                   ],
                 ),

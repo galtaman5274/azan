@@ -24,6 +24,7 @@ class StorageKeys {
 class StorageController {
   final FlutterSecureStorage _storage;
   StorageController(this._storage);
+
   Future<void> saveValue(String key, String value) async =>
       await _storage.write(key: key, value: value);
 

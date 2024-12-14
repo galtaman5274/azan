@@ -9,12 +9,7 @@ class PrayerService {
   String _currentTime = '';
   String _currentDate = '';
   String _timeLeftForNextPrayer = '';
-  final PrayerSettings prayerSettings = PrayerSettings();
-  Madhab asrMethod = Madhab.hanafi;
-  CalculationMethod calculationMethod = CalculationMethod.muslim_world_league;
   PrayerTimes? prayerTimes;
-  final List<String> asrCalculationMethods = ['Asri-Sani', 'Asri-Evvel'];
-  String asrText = 'Asri-Sani';
   String get currentTime => _currentTime;
   String get currentDate => _currentDate;
   set setCurrentTime(String time) => _currentTime = time;
@@ -31,6 +26,7 @@ class PrayerService {
   ]; // Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha
 
   PrayerService(this._adhanAudioService) {
+
     updateCurrentTimeAndTimeLeft();
   }
 

@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:adhan/adhan.dart';
-import 'package:azan/app/settings/settings_provider.dart';
+import 'package:azan/app/prayer/prayer_notifier.dart';
 import 'package:country_state_city/country_state_city.dart' as countries_state;
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 
-// Setup Page for Initial Configuration
+import '../../../app/location_provider/location_provider.dart';
+
 class SetupPage extends StatefulWidget {
   const SetupPage({super.key});
 
@@ -28,7 +29,6 @@ class _SetupPageState extends State<SetupPage> {
   List<countries_state.City> _cities = [];
 
   final List<CalculationMethod> _calculationMethods = CalculationMethod.values;
-
   final List<String> _asrCalculationMethods = ['Asri-Sani', 'Asri-Evvel'];
 
   CalculationMethod _selectedCalculationMethod = CalculationMethod.values[0];
@@ -43,18 +43,17 @@ class _SetupPageState extends State<SetupPage> {
     final countries = await countries_state.getAllCountries();
     if (mounted) {
       setState(() {
-        _countries = countries;
+        _countries = countries.toSet().toList(); // Ensure unique countries
       });
     }
     _loadStates('US'); // Automatically load states for the default country
   }
 
   Future<void> _loadStates(String countryCode) async {
-    final List<countries_state.State> states =
-        await countries_state.getStatesOfCountry(countryCode);
+    final states = await countries_state.getStatesOfCountry(countryCode);
     if (mounted) {
       setState(() {
-        _states = states;
+        _states = states.toSet().toList(); // Ensure unique states
         _selectedState = null; // Reset selected state when country changes
         _selectedCity = null; // Reset selected city when country changes
         _cities = []; // Reset cities
@@ -63,11 +62,10 @@ class _SetupPageState extends State<SetupPage> {
   }
 
   Future<void> _loadCities(String countryCode, String stateCode) async {
-    final List<countries_state.City> cities =
-        await countries_state.getStateCities(countryCode, stateCode);
+    final cities = await countries_state.getStateCities(countryCode, stateCode);
     if (mounted) {
       setState(() {
-        _cities = cities;
+        _cities = cities.toSet().toList(); // Ensure unique cities
       });
     }
   }
@@ -84,17 +82,16 @@ class _SetupPageState extends State<SetupPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Country Dropdown
-            const Text('Select Country:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Select Country:', style: TextStyle(fontWeight: FontWeight.bold)),
             DropdownButton<String>(
               isExpanded: true,
               hint: const Text("Select Country"),
-              value: _selectedCountry,
+              value: _countries.any((c) => c.isoCode == _selectedCountry) ? _selectedCountry : null,
               items: _countries
                   .map((country) => DropdownMenuItem(
-                        value: country.isoCode,
-                        child: Text(country.name),
-                      ))
+                value: country.isoCode,
+                child: Text(country.name),
+              ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -108,17 +105,16 @@ class _SetupPageState extends State<SetupPage> {
             const SizedBox(height: 20),
 
             // State Dropdown
-            const Text('Select State:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Select State:', style: TextStyle(fontWeight: FontWeight.bold)),
             DropdownButton<String>(
               isExpanded: true,
               hint: const Text("Select State"),
-              value: _selectedState,
+              value: _states.any((s) => s.isoCode == _selectedState) ? _selectedState : null,
               items: _states
                   .map((state) => DropdownMenuItem(
-                        value: state.isoCode,
-                        child: Text(state.name),
-                      ))
+                value: state.isoCode,
+                child: Text(state.name),
+              ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -131,60 +127,57 @@ class _SetupPageState extends State<SetupPage> {
             const SizedBox(height: 20),
 
             // City Dropdown
-            const Text('Select City:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Select City:', style: TextStyle(fontWeight: FontWeight.bold)),
             DropdownButton<String>(
               isExpanded: true,
               hint: const Text("Select City"),
-              value: _selectedCity,
+              value: _cities.any((c) => c.name == _selectedCity) ? _selectedCity : null,
               items: _cities
                   .map((city) => DropdownMenuItem(
-                        value: city.name,
-                        child: Text(city.name),
-                      ))
+                value: city.name,
+                child: Text(city.name),
+              ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
                   _selectedCity = value;
                 });
-                _getCoordinates(_selectedCity!);
+                _getCoordinates(value!);
               },
             ),
             const SizedBox(height: 20),
 
             // Calculation Method Dropdown
-            const Text('Select Calculation Method:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Select Calculation Method:', style: TextStyle(fontWeight: FontWeight.bold)),
             DropdownButton<CalculationMethod>(
               isExpanded: true,
               hint: const Text("Select Calculation Method"),
               value: _selectedCalculationMethod,
               items: _calculationMethods
                   .map((method) => DropdownMenuItem(
-                        value: method,
-                        child: Text(method.name),
-                      ))
+                value: method,
+                child: Text(method.name),
+              ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
-                  _selectedCalculationMethod = value as CalculationMethod;
+                  _selectedCalculationMethod = value!;
                 });
               },
             ),
             const SizedBox(height: 20),
 
             // Asr Calculation Method Dropdown
-            const Text('Select Asr Method:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Select Asr Method:', style: TextStyle(fontWeight: FontWeight.bold)),
             DropdownButton<String>(
               isExpanded: true,
               hint: const Text("Select Asr Calculation Method"),
               value: _asrCalculationMethods[_asrMethodIndex],
               items: _asrCalculationMethods
                   .map((method) => DropdownMenuItem(
-                        value: method,
-                        child: Text(method),
-                      ))
+                value: method,
+                child: Text(method),
+              ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -200,16 +193,18 @@ class _SetupPageState extends State<SetupPage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Provider.of<SetupProvider>(context,listen: false).saveSettings(
-                    state: _selectedState as String,
-                      latitude: _latitude,
-                      longitude: _longitude,
-                      selectedCalculationMethod: _selectedCalculationMethod,
-                      asrMethodIndex: _asrMethodIndex,
-                      country: _selectedCountry as String,
-                      city: _selectedCity as String);
-                            Navigator.pushReplacementNamed(context, '/prayer-times');
-
+                  context.read<LocationProvider>().saveSettings(
+                    state: _selectedState ?? '',
+                    latitude: _latitude,
+                    longitude: _longitude,
+                    country: _selectedCountry ?? '',
+                    city: _selectedCity ?? '',
+                  );
+                  context.read<PrayerTimesNotifier>().saveSettings(
+                    caluculationMethods: _selectedCalculationMethod,
+                    madhab: Madhab.values[_asrMethodIndex],
+                  );
+                  Navigator.pushReplacementNamed(context, '/prayer-times');
                 },
                 child: const Text('Save and Continue'),
               ),
@@ -220,12 +215,9 @@ class _SetupPageState extends State<SetupPage> {
     );
   }
 
-  // Get coordinates from the selected city using geocoding
   Future<void> _getCoordinates(String city) async {
     try {
-      if (_selectedCountry != null &&
-          _selectedState != null &&
-          city.isNotEmpty) {
+      if (_selectedCountry != null && _selectedState != null && city.isNotEmpty) {
         String address = '$city, $_selectedState, $_selectedCountry';
         List<Location> locations = await locationFromAddress(address);
         if (locations.isNotEmpty && mounted) {

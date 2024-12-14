@@ -14,13 +14,6 @@ void main() async {
       WidgetsFlutterBinding.ensureInitialized();
       // Initialize dependencies and configurations
       await ScreenUtil.ensureScreenSize();
-      // Initialize Hydrated Storage
-      // final storage = await HydratedStorage.build(
-      //   storageDirectory:
-      //       await getApplicationDocumentsDirectory(), // Mobile/desktop storage
-      // );
-
-      //HydratedBloc.storage = storage; // Set the global storage for HydratedBloc
       setup();
       runApp(const App());
     },

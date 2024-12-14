@@ -9,7 +9,7 @@ class CurrentTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final time = Provider.of<PrayerTimesNotifier>(context).prayerSevice.currentTime;
+    final time = Provider.of<PrayerTimesNotifier>(context).currentTime;
     return Text(
       time,
       style: const TextStyle(
@@ -25,7 +25,7 @@ class TimeLeftWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timeLeft =
-        Provider.of<PrayerTimesNotifier>(context).prayerSevice.timeLeftForNextPrayer;
+        Provider.of<PrayerTimesNotifier>(context).timeLeftForNextPrayer;
     return Column(
       children: [
         Text(
@@ -46,7 +46,7 @@ class CurrentDateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = Provider.of<PrayerTimesNotifier>(context).prayerSevice.currentDate;
+    final date = Provider.of<PrayerTimesNotifier>(context).currentDate;
     return Text(
       date,
       style: const TextStyle(

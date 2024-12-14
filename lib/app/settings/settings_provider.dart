@@ -1,73 +1,37 @@
-// providers/setup_provider.dart
 import 'package:adhan/adhan.dart';
+import 'package:azan/domain/general_settings.dart';
+import 'package:azan/domain/prayer_settings.dart';
 import 'package:flutter/material.dart';
-import '../../app.dart';
 import '../../domain/location_settings.dart';
-import '../services/location_service.dart';
-import '../services/storage_controller.dart';
 
 class SetupProvider extends ChangeNotifier {
-  final LocationService _locationService = LocationService(LocationSettings());
-  final StorageController _storage;
-  Locale _locale = const Locale('en');
+  final LocationSettings _locationSettings;
+  final GeneralSettings _generalSettings;
 
-  Locale get locale => _locale;
-  int _currentIndex = 0;
-  int get currentIndex => _currentIndex;
   void setCurrentIndex (int index){
-    _currentIndex = index;
+    _generalSettings.currentIndex = index;
     notifyListeners();
   }
 
   void setLocale(Locale locale) {
-    _locale = locale;
+    _generalSettings.locale = locale;
     notifyListeners();
   }
-  SetupProvider(this._storage) {
-    _initializeLocations();
-  }
-  StorageController get storage => _storage;
-  LocationService get locationService => _locationService;
-  Future<void> _initializeLocations() async {
-    // Fetch stored settings
-    final settings = await storage.loadLocationSettings();
-
-    if (settings['country'] != null && settings['city'] != null) {
-      final country = settings['country'];
-      final state = settings['state'];
-
-      final city = settings['city'];
-      locationService.locationSettings.country = country;
-      locationService.locationSettings.city = city;
-      locationService.locationSettings.state = state;
-    }
-
-    notifyListeners();
-  }
-
-  // void changeLocale(BuildContext context, Locale newLocale) {
-  //   App.of(context)?.setLocale(newLocale);
-  //   notifyListeners();
-  // }
+  SetupProvider(this._locationSettings,this._generalSettings);
 
   void saveSettings(
       {required String latitude,
       required String longitude,
-      required CalculationMethod selectedCalculationMethod,
-      required int asrMethodIndex,
+
       required String country,
       required String city,
       required String state}) {
-    locationService.locationSettings.country = country;
-    locationService.locationSettings.city = city;
-    storage.saveSettings(
-        country: country,
-        state: state,
-        city: city,
-        latitude: latitude,
-        longitude: longitude,
-        calculationMethod: selectedCalculationMethod,
-        asrMethod: Madhab.values[asrMethodIndex]);
+    _locationSettings.country = country;
+    _locationSettings.state = state;
+    _locationSettings.city = city;
+    _locationSettings.longitude = double.parse(longitude);
+    _locationSettings.latitude = double.parse(latitude);
+
     notifyListeners();
   }
 }

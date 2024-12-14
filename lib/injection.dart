@@ -1,23 +1,29 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:azan/app/locale_provider/locale_provider.dart';
 import 'package:azan/app/prayer/prayer_notifier.dart';
 import 'package:azan/app/screen_saver/main_provider.dart';
 import 'package:azan/app/services/audio_service.dart';
 import 'package:azan/app/services/prayer_service.dart';
+import 'package:azan/domain/location_settings.dart';
+import 'package:azan/domain/prayer_settings.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'app/location_provider/location_provider.dart';
 import 'app/services/storage_controller.dart';
-import 'app/settings/settings_provider.dart';
 
 final GetIt sl = GetIt.instance;
 
 void setup() {
-  sl.registerLazySingleton(() => const FlutterSecureStorage());
-  sl.registerLazySingleton(() => StorageController(sl<FlutterSecureStorage>()));
+  sl.registerLazySingleton<FlutterSecureStorage>(() => const FlutterSecureStorage());
+  sl.registerLazySingleton<StorageController>(() => StorageController(sl<FlutterSecureStorage>()));
   sl.registerLazySingleton<NavigationProvider>(()=>NavigationProvider(sl<StorageController>()));
-  sl.registerLazySingleton<SetupProvider>(() => SetupProvider(sl<StorageController>()));
-  sl.registerLazySingleton(() => AudioPlayer());
-  sl.registerLazySingleton(() => AdhanAudioService(sl<AudioPlayer>()));
-  sl.registerLazySingleton(() => PrayerService(sl<AdhanAudioService>()));
-  sl.registerLazySingleton(
-      () => PrayerTimesNotifier(sl<PrayerService>(), sl<StorageController>()));
+  sl.registerLazySingleton<AudioPlayer>(() => AudioPlayer());
+  sl.registerLazySingleton<AdhanAudioService>(() => AdhanAudioService(sl<AudioPlayer>()));
+  sl.registerLazySingleton<PrayerService>(() => PrayerService(sl<AdhanAudioService>()));
+  sl.registerLazySingleton<PrayerSettings>(()=>PrayerSettings(storageController: sl<StorageController>())..initializeFromStorage());
+  sl.registerLazySingleton<PrayerTimesNotifier>(
+      () => PrayerTimesNotifier(sl<PrayerSettings>(), sl<AdhanAudioService>()));
+  sl.registerLazySingleton<LocaleProvider>(()=>LocaleProvider());
+  sl.registerLazySingleton<LocationSettings>(()=>LocationSettings(storageController: sl<StorageController>()));
+  sl.registerLazySingleton<LocationProvider>(()=> LocationProvider(sl<LocationSettings>()));
 }

@@ -21,12 +21,7 @@ class PrayerTimeItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: hasPassed ? Colors.grey : Colors.white, // Change color if prayer has passed
         borderRadius: BorderRadius.circular(12.0),
-        image: const DecorationImage(
-          image: AssetImage(
-            'assets/images/time_frame.png',
-          ), // Replace with your image path
-          fit: BoxFit.fill,
-        ),
+
       ),
       child: Padding(
         padding: const EdgeInsets.all(4.0),

@@ -68,7 +68,7 @@ class PrayerSettingsTab extends StatelessWidget {
               child: ElevatedButton(
 
                 onPressed: () {
-                  provider.saveAdjustments(prayerAdjustments);
+                  //provider.saveAdjustments(prayerAdjustments);
                 },
 
                 child: const Text('Save Adjustments'),

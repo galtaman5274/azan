@@ -4,9 +4,7 @@ import 'package:azan/presentation/pages/home/components/location_widget.dart';
 import 'package:azan/presentation/pages/home/components/main_button.dart';
 import 'package:azan/presentation/pages/home/components/prayer_time_widgets.dart';
 import 'package:azan/presentation/pages/home/components/time_widgets.dart';
-import 'package:azan/presentation/pages/home/constants/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app/prayer/prayer_notifier.dart';
@@ -18,121 +16,112 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PrayerTimesNotifier>(
       builder: (context, notifier, _) {
-        return notifier.prayerTimes
+        return notifier.prayerSettings.prayerTimes == null
             ? const Center(child: CircularProgressIndicator())
-            : Stack(children: [
-                Image.asset(
-                  notifier.currentBackgroundImage,
+            : Container(
+          decoration:const BoxDecoration(
+            image:  DecorationImage(
+              image: AssetImage(
+                'assets/images/cf5.png',
+              ), // Replace with your image path
+              fit: BoxFit.fill,
+            ),
+          ),
+              child: Center(
+            child: Container(
+            width: 1000,
+            height: 600,
+            decoration: BoxDecoration(
+                image:const  DecorationImage(
+                  image: AssetImage(
+                    'assets/images/r13.png',
+                  ), // Replace with your image path
                   fit: BoxFit.fill,
-                  height: double.infinity,
-                  width: double.infinity,
                 ),
-                Image.asset(
-                  Assets.backFrame,
-                  fit: BoxFit.fill,
-                  height: double.infinity,
-                  width: double.infinity,
-                ),
-                Positioned(
-                  right: -54.w,
-                  top: 60,
-                  child: Image.asset(
-                    Assets.clockFrame,
-                    fit: BoxFit.contain,
-                    height: 250.h,
-                    width: 250.w,
-                  ),
-                ),
-                const Positioned(right: 0, bottom: 0, child: LocationWidget()),
+            borderRadius: BorderRadius.circular(20),), // Rounded corners
+                  child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                        MainButton(
 
-                Positioned(
-                    right: 58.w, top: 140.h, child: const CurrentTimeWidget()),
-                Positioned(
-                    right: 63.w, top: 220.h, child: const TimeLeftWidget()),
-                Positioned(
-                    right: 240.dg,
-                    bottom: 8.dg,
-                    child: const CurrentDateWidget()),
-                Positioned(
-                  right: 50.w,
-                  bottom: 250.h,
-                  child: PrayerTimeItemWidget(
-                    prayerName: context.l10n.prayerFajr,
-                    prayerTime: notifier.getPrayerTime(Prayer.fajr),
-                    hasPassed: notifier.prayerSevice.prayerPassed[0],
-                  ),
+                          text: context.l10n.homeButtonClose,
+                          turnOff: true,
+                          nav: 'close',
+                        ),
+                        MainButton(
+                          text: context.l10n.homeButtonAdhan,nav: 'adhan',),
+                        MainButton(
+                        text: context.l10n.homeButtonQuran,nav: 'quran',),
+                        MainButton(
+
+                          text: context.l10n.homeButtonSettings,nav: 'settings',),
+                      ],),
+                    ),
+                     Padding(
+                       padding: const EdgeInsets.all(50.0),
+                       child: Row(
+                        children: [
+                          const Image(image: AssetImage('assets/images/azan_bg.jpg'),height: 400,),
+                        const SizedBox(width: 50,),
+                        Column(
+                          children: [
+                          const Column(children: [
+                            CurrentTimeWidget(),
+                            TimeLeftWidget()
+                          ],),
+                          Row(children: [
+                            PrayerTimeItemWidget(
+                              prayerName: context.l10n.prayerFajr,
+                              prayerTime: notifier.getPrayerTime(Prayer.fajr),
+                              hasPassed: notifier.prayerPassed[0],
+                            ),
+                            PrayerTimeItemWidget(
+                              prayerName: context.l10n.prayerTulu,
+                              prayerTime: notifier.getPrayerTime(Prayer.sunrise),
+                              hasPassed: notifier.prayerPassed[1],
+                            ),
+                            PrayerTimeItemWidget(
+                              prayerName: context.l10n.prayerDhuhr,
+                              prayerTime: notifier.getPrayerTime(Prayer.dhuhr),
+                              hasPassed: notifier.prayerPassed[2],
+                            ),
+                          ],),
+                            Row(children: [
+
+                              PrayerTimeItemWidget(
+                                prayerName: context.l10n.prayerAsr,
+                                prayerTime: notifier.getPrayerTime(Prayer.asr),
+                                hasPassed: notifier.prayerPassed[3],
+                              ),
+                              PrayerTimeItemWidget(
+                                prayerName: context.l10n.prayerMaghrib,
+                                prayerTime: notifier.getPrayerTime(Prayer.maghrib),
+                                hasPassed: notifier.prayerPassed[4],
+                              ),
+                              PrayerTimeItemWidget(
+                                prayerName: context.l10n.prayerIsha,
+                                prayerTime: notifier.getPrayerTime(Prayer.isha),
+                                hasPassed: notifier.prayerPassed[5],
+                              ),
+                            ],)
+                        ],)
+
+                                           ],),
+                     ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                       LocationWidget(),
+                       CurrentDateWidget()
+                     ],),
+                    ]),
                 ),
-                Positioned(
-                  right: 80.w,
-                  bottom: 140.h,
-                  child: PrayerTimeItemWidget(
-                    prayerName: context.l10n.prayerTulu,
-                    prayerTime: notifier.getPrayerTime(Prayer.sunrise),
-                    hasPassed: notifier.prayerSevice.prayerPassed[1],
-                  ),
-                ),
-                Positioned(
-                  right: 20.w,
-                  bottom: 140.h,
-                  child: PrayerTimeItemWidget(
-                    prayerName: context.l10n.prayerDhuhr,
-                    prayerTime: notifier.getPrayerTime(Prayer.dhuhr),
-                    hasPassed: notifier.prayerSevice.prayerPassed[2],
-                  ),
-                ),
-                Positioned(
-                  right: 20.w,
-                  bottom: 10,
-                  child: PrayerTimeItemWidget(
-                    prayerName: context.l10n.prayerAsr,
-                    prayerTime: notifier.getPrayerTime(Prayer.asr),
-                    hasPassed: notifier.prayerSevice.prayerPassed[3],
-                  ),
-                ),
-                Positioned(
-                  right: 80.w,
-                  bottom: 10,
-                  child: PrayerTimeItemWidget(
-                    prayerName: context.l10n.prayerMaghrib,
-                    prayerTime: notifier.getPrayerTime(Prayer.maghrib),
-                    hasPassed: notifier.prayerSevice.prayerPassed[4],
-                  ),
-                ),
-                Positioned(
-                  right: 140.w,
-                  bottom: 10,
-                  child: PrayerTimeItemWidget(
-                    prayerName: context.l10n.prayerIsha,
-                    prayerTime: notifier.getPrayerTime(Prayer.isha),
-                    hasPassed: notifier.prayerSevice.prayerPassed[5],
-                  ),
-                ),
-                Positioned(
-                    left: 0,
-                    bottom: 0,
-                    child: MainButton(
-                      img: 'bg_close',
-                      text: context.l10n.homeButtonClose,
-                      turnOff: true,
-                      nav: 'close',
-                    )),
-                Positioned(
-                    left: 0,
-                    bottom: 150.h,
-                    child: MainButton(
-                        img: 'azan_frame', text: context.l10n.homeButtonAdhan,nav: 'adhan',)),
-                Positioned(
-                    left: 20.w,
-                    bottom: 75.h,
-                    child: MainButton(
-                        img: 'bg_quran', text: context.l10n.homeButtonQuran,nav: 'quran',)),
-                Positioned(
-                    left: 50.w,
-                    bottom: 25.h,
-                    child: MainButton(
-                        img: 'bg_settings',
-                        text: context.l10n.homeButtonSettings,nav: 'settings',)),
-              ]);
+              ),
+            );
       },
     );
   }

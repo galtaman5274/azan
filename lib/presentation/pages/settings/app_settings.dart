@@ -1,4 +1,5 @@
 import 'package:azan/app.dart';
+import 'package:azan/app/locale_provider/locale_provider.dart';
 import 'package:azan/app/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,7 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
           ),
           const SizedBox(height: 20),
           DropdownButton<Locale>(
-            value: context.watch<SetupProvider>().locale,
+            value: context.watch<LocaleProvider>().locale,
             onChanged: (Locale? newLocale) {
               if (newLocale != null) {
                 context.read<SetupProvider>().setLocale(newLocale);
