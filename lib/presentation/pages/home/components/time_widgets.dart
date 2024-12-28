@@ -13,7 +13,7 @@ class CurrentTimeWidget extends StatelessWidget {
     return Text(
       time,
       style: const TextStyle(
-          color: Colors.brown, fontSize: 35, fontWeight: FontWeight.bold),
+          color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
     );
   }
 }
@@ -26,15 +26,17 @@ class TimeLeftWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeLeft =
         Provider.of<PrayerTimesNotifier>(context).timeLeftForNextPrayer;
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           context.l10n.timeLeftText,
-          style: const TextStyle(fontSize: 8, color: Colors.brown),
+          style: const TextStyle(fontSize: 15, color: Colors.white),
         ),
+        const SizedBox(width: 10,),
         Text(
           timeLeft,
-          style: const TextStyle(fontSize: 15, color: Colors.brown),
+          style: const TextStyle(fontSize: 15, color: Colors.white),
         ),
       ],
     );
@@ -49,8 +51,7 @@ class CurrentDateWidget extends StatelessWidget {
     final date = Provider.of<PrayerTimesNotifier>(context).currentDate;
     return Text(
       date,
-      style: const TextStyle(
-          color: Colors.orange, fontSize: 10),
+      style: const TextStyle( fontSize: 20),
     );
   }
 }

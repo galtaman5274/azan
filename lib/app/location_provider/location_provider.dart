@@ -9,8 +9,8 @@ class LocationProvider extends ChangeNotifier {
   LocationProvider(this._locationSettings);
   LocationSettings get locationSettings => _locationSettings;
 void init(){
-  _locationSettings.initializeFromStorage();
-  notifyListeners();
+  _locationSettings.initializeFromStorage().then((_)=>notifyListeners());
+  //notifyListeners();
 }
   void saveSettings(
       {required String latitude,

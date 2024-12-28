@@ -40,7 +40,7 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
             value: context.watch<LocaleProvider>().locale,
             onChanged: (Locale? newLocale) {
               if (newLocale != null) {
-                context.read<SetupProvider>().setLocale(newLocale);
+                context.read<LocaleProvider>().setLocale(newLocale);
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   navigator.updateImages(Images.getImages(newLocale));
                 });

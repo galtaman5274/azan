@@ -19,7 +19,7 @@ class PrayerTimeItemWidget extends StatelessWidget {
       width: 150,
       height: 100,
       decoration: BoxDecoration(
-        color: hasPassed ? Colors.grey : Colors.white, // Change color if prayer has passed
+        color: hasPassed ? Colors.grey : const Color.fromARGB(255, 177, 146, 135), // Change color if prayer has passed
         borderRadius: BorderRadius.circular(12.0),
 
       ),
@@ -32,11 +32,11 @@ class PrayerTimeItemWidget extends StatelessWidget {
             const SizedBox(height: 10.0),
 
             Text(
-              prayerName,
+              prayerName.toUpperCase(),
               style:  TextStyle(
-                fontSize: 18,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
-              color: hasPassed ? Colors.grey : Colors.orange, // Optional: Change text color
+              color: hasPassed ? Colors.grey : Colors.white, // Optional: Change text color
               ),
             ),
             const SizedBox(height: 4.0),
@@ -44,7 +44,7 @@ class PrayerTimeItemWidget extends StatelessWidget {
               prayerTime,
               style: const TextStyle(
                 fontSize: 20,
-                color: Colors.brown, // Text color for better visibility
+                color: Colors.white, // Text color for better visibility
               ),
             ),
           ],

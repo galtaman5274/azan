@@ -220,6 +220,10 @@ class _SetupPageState extends State<SetupLocation> {
                   country: _selectedCountry ?? '',
                   city: _selectedCity ?? '',
                 );
+                context.read<PrayerTimesNotifier>().saveSettings(
+                    caluculationMethods: _selectedCalculationMethod,
+                    madhab: Madhab.values[_asrMethodIndex],
+                  );
                 context
                     .read<PrayerTimesNotifier>()
                     .updatePrayer(double.parse(_latitude), double.parse(_longitude));

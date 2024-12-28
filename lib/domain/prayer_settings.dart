@@ -13,18 +13,33 @@ class PrayerKeys {
 }
 
 class PrayerSettings {
+  Map<Prayer, DateTime> prayerAdjustments = {};
   final StorageController storageController;
   // PrayerTimes prayerTimes = PrayerTimes.today(Coordinates(40.7128, -74.0060), CalculationMethod.muslim_world_league.getParameters()..madhab = Madhab.hanafi);
-  PrayerTimes prayerTimes = PrayerTimes.today(Coordinates(40.7128, 74.0060), CalculationMethod.muslim_world_league.getParameters()..madhab = Madhab.hanafi);
+  PrayerTimes prayerTimes = PrayerTimes.today(
+      Coordinates(40.7128, 74.0060),
+      CalculationMethod.muslim_world_league.getParameters()
+        ..madhab = Madhab.hanafi);
 
   PrayerSettings({
     required this.storageController,
-  });
+  }) {
+    prayerAdjustments = {
+      Prayer.fajr: prayerTimes.fajr,
+      Prayer.sunrise: prayerTimes.sunrise,
+      Prayer.dhuhr: prayerTimes.dhuhr,
+      Prayer.asr: prayerTimes.asr,
+      Prayer.maghrib: prayerTimes.maghrib,
+      Prayer.isha: prayerTimes.isha
+    };
+  }
   // Getter and Setter for calculationMethod
-  CalculationMethod get calculationMethod => prayerTimes.calculationParameters.method;
+  CalculationMethod get calculationMethod =>
+      prayerTimes.calculationParameters.method;
   set calculationMethod(CalculationMethod value) {
     prayerTimes.calculationParameters.method = value;
-    storageController.saveValue(PrayerKeys.calculationMethod, value.index.toString());
+    storageController.saveValue(
+        PrayerKeys.calculationMethod, value.index.toString());
   }
 
   // Getter and Setter for asrMethod
@@ -37,9 +52,8 @@ class PrayerSettings {
   // Getter and Setter for fajr
   int get fajr => prayerTimes.calculationParameters.adjustments.fajr;
   set fajr(int value) {
-    prayerTimes.calculationParameters.adjustments.fajr =value;
+    prayerTimes.calculationParameters.adjustments.fajr = value;
     storageController.saveValue(PrayerKeys.fajr, value.toString());
-
   }
 
   // Getter and Setter for tulu
@@ -76,19 +90,43 @@ class PrayerSettings {
     prayerTimes.calculationParameters.adjustments.isha = value;
     storageController.saveValue(PrayerKeys.isha, value.toString());
   }
-Future<void> updateLocation(double lati, double long) async =>     prayerTimes = PrayerTimes.today(Coordinates(lati, long), calculationMethod.getParameters()..madhab = asrMethod);
+
+  Future<void> updateLocation(double lati, double long) async {
+    prayerTimes = PrayerTimes.today(Coordinates(lati, long),
+        calculationMethod.getParameters()..madhab = asrMethod);
+    prayerAdjustments = {
+      Prayer.fajr: prayerTimes.fajr,
+      Prayer.sunrise: prayerTimes.sunrise,
+      Prayer.dhuhr: prayerTimes.dhuhr,
+      Prayer.asr: prayerTimes.asr,
+      Prayer.maghrib: prayerTimes.maghrib,
+      Prayer.isha: prayerTimes.isha
+    };
+  }
 
   // Initialize values from storage
   Future<void> initializeFromStorage() async {
     // Load calculationMethod
-    final storedCalculationMethod = await storageController.getValue(PrayerKeys.calculationMethod);
-    if (storedCalculationMethod != null) calculationMethod = CalculationMethod.values[int.parse(storedCalculationMethod)];
+    final storedCalculationMethod =
+        await storageController.getValue(PrayerKeys.calculationMethod);
+    // if (storedCalculationMethod != null) calculationMethod = CalculationMethod.values[int.parse('1')];
+    if (storedCalculationMethod != null)
+      calculationMethod =
+          CalculationMethod.values[int.parse(storedCalculationMethod)];
     // Load asrMethod
-    final storedAsrMethod = await storageController.getValue(PrayerKeys.asrMethod);
-    if (storedAsrMethod != null) asrMethod = Madhab.values[int.parse(storedAsrMethod)];
+    final storedAsrMethod =
+        await storageController.getValue(PrayerKeys.asrMethod);
+    // if (storedAsrMethod != null) asrMethod = Madhab.values[int.parse('1')];
+    if (storedAsrMethod != null)
+      asrMethod = Madhab.values[int.parse(storedAsrMethod)];
+
     final latitude = await storageController.getValue('latitude');
     final longitude = await storageController.getValue('longitude');
-    prayerTimes = PrayerTimes.today(Coordinates(double.parse(latitude as String), double.parse(longitude as String)), calculationMethod.getParameters()..madhab = asrMethod);
+
+    prayerTimes = PrayerTimes.today(
+        Coordinates(double.parse(latitude as String),
+            double.parse(longitude as String)),
+        calculationMethod.getParameters()..madhab = asrMethod);
 
     // Load prayer times
     final storedFajr = await storageController.getValue(PrayerKeys.fajr);
@@ -103,6 +141,19 @@ Future<void> updateLocation(double lati, double long) async =>     prayerTimes =
     if (storedMagrib != null) magrib = int.parse(storedMagrib);
     final storedIsha = await storageController.getValue(PrayerKeys.isha);
     if (storedIsha != null) isha = int.parse(storedIsha);
-
+    prayerAdjustments = {
+      Prayer.fajr:
+          prayerTimes.fajr.add(Duration(minutes: int.parse(storedFajr ?? '0'))),
+      Prayer.sunrise: prayerTimes.sunrise
+          .add(Duration(minutes: int.parse(storedTulu ?? '0'))),
+      Prayer.dhuhr: prayerTimes.dhuhr
+          .add(Duration(minutes: int.parse(storedDhuhr ?? '0'))),
+      Prayer.asr:
+          prayerTimes.asr.add(Duration(minutes: int.parse(storedAsr ?? '0'))),
+      Prayer.maghrib: prayerTimes.maghrib
+          .add(Duration(minutes: int.parse(storedMagrib ?? '0'))),
+      Prayer.isha:
+          prayerTimes.isha.add(Duration(minutes: int.parse(storedIsha ?? '0')))
+    };
   }
 }

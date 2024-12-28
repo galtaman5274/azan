@@ -1,11 +1,9 @@
 import 'package:adhan/adhan.dart';
 import 'package:azan/app/locale_provider/locale_provider.dart';
 import 'package:azan/app/prayer/prayer_notifier.dart';
-import 'package:azan/app/settings/settings_provider.dart';
 import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/adhan/adhan_page.dart';
 import 'package:azan/presentation/pages/home/home_page.dart';
-import 'package:azan/presentation/pages/quran/quran.dart';
 import 'package:azan/presentation/pages/settings/settings_screen.dart';
 import 'package:azan/quran/quran_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +23,19 @@ class ScreenSaver extends StatefulWidget {
 class _ScreenSaverState extends State<ScreenSaver>
     with TickerProviderStateMixin {
   @override
-  void initState() {
-    super.initState();
-
-    // Delay the initialization until the first frame has been rendered
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) {
       Provider.of<NavigationProvider>(context, listen: false)
           .initScreenSaverController(
-              Images.getImages(Provider.of<LocaleProvider>(context,listen: false).locale), this);
-    });
-  }
+              Images.getImages(
+                  Provider.of<LocaleProvider>(context, listen: false).locale),
+              this);
+    }
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class _ScreenSaverState extends State<ScreenSaver>
               // Display the active screen
               Consumer<NavigationProvider>(
                 builder: (context, provider, _) {
+                  
                   switch (provider.currentScreen) {
                     case 'settings':
                       return const SettingsPage();

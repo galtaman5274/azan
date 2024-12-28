@@ -125,6 +125,7 @@ class ScreenSaverController extends ChangeNotifier {
   if (_animationController.isAnimating) {
     _animationController.stop();
   }
+  
     _animationController.dispose();
     super.dispose();
   }

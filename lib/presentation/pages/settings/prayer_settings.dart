@@ -4,10 +4,15 @@ import 'package:azan/presentation/localization/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PrayerSettingsTab extends StatelessWidget {
-   PrayerSettingsTab({super.key});
+class PrayerSettingsTab extends StatefulWidget {
+  PrayerSettingsTab({super.key});
 
-   Map<String, String> prayerAdjustments = {
+  @override
+  State<PrayerSettingsTab> createState() => _PrayerSettingsTabState();
+}
+
+class _PrayerSettingsTabState extends State<PrayerSettingsTab> {
+  Map<String, String> prayerAdjustments = {
     'fajr': '0',
     'tulu': '0',
     'dhuhr': '0',
@@ -16,6 +21,7 @@ class PrayerSettingsTab extends StatelessWidget {
     'isha': '0'
   };
 
+  int num = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class PrayerSettingsTab extends StatelessWidget {
     };
     return Consumer<PrayerTimesNotifier>(
       builder: (context, provider, _) {
-         return Column(
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
@@ -47,16 +53,39 @@ class PrayerSettingsTab extends StatelessWidget {
                       style: const TextStyle(fontSize: 16),
                     ),
                     SizedBox(
-                      width: 50,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: prayerAdjustments[prayer].toString(),
-                        ),
-                        onChanged: (value) {
-                          prayerAdjustments[prayer] = value;
-
-                        },
+                      width: 180,
+                      child: Row(
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  num--;
+                                  prayerAdjustments[prayer] = num.toString();
+                                });
+                              },
+                              child: const Text('-')),
+                          Expanded(
+                            child: TextField(
+                              readOnly: true,
+                              textAlign: TextAlign.center,
+                              //keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: prayerAdjustments[prayer].toString(),
+                              ),
+                              // onChanged: (value) {
+                              //   prayerAdjustments[prayer] = value;
+                              // },
+                            ),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  num++;
+                                  prayerAdjustments[prayer] = num.toString();
+                                });
+                              },
+                              child: const Text('+')),
+                        ],
                       ),
                     ),
                   ],
@@ -66,11 +95,10 @@ class PrayerSettingsTab extends StatelessWidget {
             const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
-
                 onPressed: () {
-                  //provider.saveAdjustments(prayerAdjustments);
+                  //prayerAdjustments[prayer] = num.toString();
+                  provider.saveAdjustments(prayerAdjustments);
                 },
-
                 child: const Text('Save Adjustments'),
               ),
             ),

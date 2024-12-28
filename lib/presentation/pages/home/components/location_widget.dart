@@ -1,4 +1,3 @@
-import 'package:azan/app/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +12,7 @@ class LocationWidget extends StatelessWidget {
       builder: (context, setup, child) {
         return Text(
             '${setup.locationSettings.city} / ${setup.locationSettings.country}',
-            style:const TextStyle(fontSize: 10));
+            style:const TextStyle(fontSize: 20));
       },
     );
   }
