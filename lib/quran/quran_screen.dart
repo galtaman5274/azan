@@ -3,13 +3,12 @@ import 'package:azan/quran/view/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-
 import 'bloc/album_bloc/album_bloc.dart';
 import 'bloc/boarding_bloc/boarding_bloc.dart';
 import 'bloc/home_bloc/home_bloc.dart';
 import 'bloc/player_bloc/player_bloc.dart';
 import 'db_helper/db_helper.dart';
-import 'view/splash/splash.dart';
+
 
 
 class QuranPage extends StatelessWidget {

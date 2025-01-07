@@ -33,7 +33,7 @@ dependencies:
 
   cupertino_icons: ^1.0.6
 
-  equatable: ^2.0.5
+  equatable: ^2.0.7
   flutter_secure_storage: ^9.2.2
   internet_connection_checker: ^1.0.0+1
 
@@ -101,6 +101,7 @@ flutter:
     - assets/screen_savers/us/
     - assets/qari/
     - assets/qari.json
+    - assets/audio/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -76,7 +76,14 @@ class PrayerTimesNotifier extends ChangeNotifier {
 
     for (int i = 0; i < prayerTimesList.length; i++) {
       // Check if current time matches a prayer time exactly
-      if (now.isAtSameMomentAs(prayerTimesList[i])) {
+     // if (now.isAtSameMomentAs(prayerTimesList[i])) {
+     if(now.hour>prayerTimesList[i].hour){
+        prayerPassed[i]=true;
+     }
+     if(now.hour==prayerTimesList[i].hour&&now.minute>prayerTimesList[i].minute){
+      prayerPassed[i]=true;
+     }
+     if( now.hour==prayerTimesList[i].hour&&now.minute==prayerTimesList[i].minute){
         if (!prayerPassed[i]) {
           // Play Adhan only if it's the first time reaching this prayer
           _playAdhan();
@@ -85,7 +92,8 @@ class PrayerTimesNotifier extends ChangeNotifier {
       }
 
       // Reset the status for prayers yet to come
-      if (prayerTimesList[i].isAfter(now)) {
+   //   if (prayerTimesList[i].isAfter(now)) {
+   if(prayerTimesList[i].year<now.year||prayerTimesList[i].month<now.month||prayerTimesList[i].day<now.day){
         prayerPassed[i] = false;
       }
     }

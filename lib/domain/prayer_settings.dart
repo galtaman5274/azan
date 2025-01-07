@@ -1,6 +1,7 @@
 import 'package:adhan/adhan.dart';
 import '../app/services/storage_controller.dart';
 
+
 class PrayerKeys {
   static const String calculationMethod = 'calculationMethod';
   static const String asrMethod = 'asrMethod';

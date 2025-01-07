@@ -5,19 +5,21 @@ class PrayerTimeItemWidget extends StatelessWidget {
   final String prayerName;
   final String prayerTime;
   final bool hasPassed;
+  final bool screenSaver;
 
   const PrayerTimeItemWidget({
     super.key,
     required this.prayerName,
     required this.prayerTime,
     required this.hasPassed,
+    required this.screenSaver,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 150,
-      height: 100,
+      height: screenSaver==true?60:100,
       decoration: BoxDecoration(
         color: hasPassed ? Colors.grey : const Color.fromARGB(255, 177, 146, 135), // Change color if prayer has passed
         borderRadius: BorderRadius.circular(12.0),
@@ -29,21 +31,21 @@ class PrayerTimeItemWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 10.0),
+            SizedBox(height:screenSaver==true?5:10),
 
             Text(
               prayerName.toUpperCase(),
               style:  TextStyle(
-                fontSize: 25,
+                fontSize: screenSaver==true?18:25,
                 fontWeight: FontWeight.bold,
-              color: hasPassed ? Colors.grey : Colors.white, // Optional: Change text color
+              color: hasPassed ? const Color.fromARGB(255, 80, 237, 23) : Colors.white, // Optional: Change text color
               ),
             ),
             const SizedBox(height: 4.0),
             Text(
               prayerTime,
-              style: const TextStyle(
-                fontSize: 20,
+              style: TextStyle(
+                fontSize: screenSaver==true?12:20,
                 color: Colors.white, // Text color for better visibility
               ),
             ),

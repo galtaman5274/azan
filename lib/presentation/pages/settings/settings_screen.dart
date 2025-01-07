@@ -1,4 +1,3 @@
-import 'package:azan/app.dart';
 import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/settings/app_settings.dart';
 import 'package:flutter/material.dart';

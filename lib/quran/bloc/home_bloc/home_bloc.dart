@@ -26,7 +26,7 @@ class HomeBloc extends Bloc<HomeEvents,HomeState>{
     add(ChangeLoadingStatusSong(songStatus: Status.loading,));
     try{
       songList.clear();
-      for(var item in (await AudioFileQueries.getFiles('/storage/emulated/0/Music'))){
+      for(var item in (await AudioFileQueries.getFiles('/assets/audio/'))){
         songList.add(item);
       }
     }catch(_){
@@ -64,9 +64,9 @@ class HomeBloc extends Bloc<HomeEvents,HomeState>{
   }
   Future<void> _onAddToAlbumEvent(AddToAlbum event,Emitter<HomeState> emit) async {
     try{
-      if(Directory('/storage/emulated/0/Music').existsSync()){
+      if(Directory('/assets/audio').existsSync()){
       }else{
-        Directory('/storage/emulated/0/Music').createSync(recursive: true);
+        Directory('/assets/audio').createSync(recursive: true);
       }
 
       final bool alreadyExist=File('/storage/emulated/0/Music/${event.file.name!}').existsSync();

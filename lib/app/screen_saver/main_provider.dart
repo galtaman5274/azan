@@ -12,7 +12,7 @@ class NavigationProvider extends ChangeNotifier {
 int _animationDuration = 30;
 int _inactivityTimer = 50;
 void init()async{
-  _animationDuration = int.parse(await _storage.getValue('animationDuration') ?? '50');
+  _animationDuration = int.parse(await _storage.getValue('animationDuration') ?? '10');//50
   _inactivityTimer = int.parse(await _storage.getValue('inactivityTimer') ?? '30');
   notifyListeners();
 }

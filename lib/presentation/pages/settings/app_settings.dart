@@ -1,6 +1,4 @@
-import 'package:azan/app.dart';
 import 'package:azan/app/locale_provider/locale_provider.dart';
-import 'package:azan/app/settings/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

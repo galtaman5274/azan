@@ -21,7 +21,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
         return
             // notifier.prayerSettings.prayerTimes == null
             //     ? const Center(child: CircularProgressIndicator())
-            //     :
+            //     :     
             Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -118,6 +118,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.fajr),
                                   hasPassed: notifier.prayerPassed[0],
+                                  screenSaver: false,
                                 ),
                                 const SizedBox(
                                   width: 20,
@@ -127,6 +128,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.sunrise),
                                   hasPassed: notifier.prayerPassed[1],
+                                   screenSaver: false,
                                 ),
                                 const SizedBox(
                                   width: 20,
@@ -136,6 +138,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.dhuhr),
                                   hasPassed: notifier.prayerPassed[2],
+                                   screenSaver: false,
                                 ),
                               ],
                             ),
@@ -149,6 +152,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.asr),
                                   hasPassed: notifier.prayerPassed[3],
+                                   screenSaver: false,
                                 ),
                                 const SizedBox(
                                   width: 20,
@@ -158,6 +162,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.maghrib),
                                   hasPassed: notifier.prayerPassed[4],
+                                   screenSaver: false,
                                 ),
                                 const SizedBox(
                                   width: 20,
@@ -167,6 +172,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.isha),
                                   hasPassed: notifier.prayerPassed[5],
+                                   screenSaver: false,
                                 ),
                               ],
                             )

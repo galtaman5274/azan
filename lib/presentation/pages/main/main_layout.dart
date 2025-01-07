@@ -127,7 +127,7 @@ void initState() {
 
             Consumer<PrayerTimesNotifier>(
               builder: (context, provider, _) {
-              return Container(
+                             return Container(
                 color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,31 +136,37 @@ void initState() {
                       prayerName: context.l10n.prayerFajr,
                       prayerTime: provider.getPrayerTime(Prayer.fajr),
                       hasPassed: provider.prayerPassed[0],
+                      screenSaver: true,
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerTulu,
                       prayerTime: provider.getPrayerTime(Prayer.sunrise),
                       hasPassed: provider.prayerPassed[1],
+                      screenSaver: true,
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerDhuhr,
                       prayerTime: provider.getPrayerTime(Prayer.dhuhr),
                       hasPassed: provider.prayerPassed[2],
+                      screenSaver: true,
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerAsr,
                       prayerTime: provider.getPrayerTime(Prayer.asr),
                       hasPassed: provider.prayerPassed[3],
+                      screenSaver: true,
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerMaghrib,
                       prayerTime: provider.getPrayerTime(Prayer.maghrib),
                       hasPassed: provider.prayerPassed[4],
+                      screenSaver: true,
                     ),
                     PrayerTimeItemWidget(
                       prayerName: context.l10n.prayerIsha,
                       prayerTime: provider.getPrayerTime(Prayer.isha),
                       hasPassed: provider.prayerPassed[5],
+                      screenSaver: true,
                     ),
                   ],
                 ),

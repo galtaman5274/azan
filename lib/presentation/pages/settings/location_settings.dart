@@ -32,7 +32,7 @@ class _SetupPageState extends State<SetupLocation> {
 
   final List<String> _asrCalculationMethods = ['Asri-Sani', 'Asri-Evvel'];
 
-  CalculationMethod _selectedCalculationMethod = CalculationMethod.values[0];
+  CalculationMethod _selectedCalculationMethod = CalculationMethod.values[10];
 
   @override
   void initState() {
