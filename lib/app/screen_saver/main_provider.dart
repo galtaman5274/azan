@@ -9,11 +9,11 @@ class NavigationProvider extends ChangeNotifier {
   bool _showScreenSaver = false;
   final StorageController _storage;
   NavigationProvider(this._storage);
-int _animationDuration = 30;
-int _inactivityTimer = 50;
+int _animationDuration = 2;
+int _inactivityTimer = 3;
 void init()async{
-  _animationDuration = int.parse(await _storage.getValue('animationDuration') ?? '10');//50
-  _inactivityTimer = int.parse(await _storage.getValue('inactivityTimer') ?? '30');
+  _animationDuration = int.parse(await _storage.getValue('animationDuration') ?? '2');//50
+  _inactivityTimer = int.parse(await _storage.getValue('inactivityTimer') ?? '3');
   notifyListeners();
 }
 void saveSaverSettings()async{

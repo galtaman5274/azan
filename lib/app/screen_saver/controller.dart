@@ -82,11 +82,24 @@ class ScreenSaverController extends ChangeNotifier {
   }
 
   void _startImageChange() {
-    _imageChangeTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    
+
+    _imageChangeTimer =  Timer.periodic(const Duration(seconds: 10), (timer) {
       if (!_animationController.isAnimating) {
         _currentIndex = (_currentIndex + 1) % images.length;
         _setRandomAnimation();
-        _animationController.forward(from: 0.0);
+        //_animationController.forward(from: 0.0);
+        _animationController.forward(from: 0.0).whenComplete(() async {
+          // Pause for a specific duration after the animation completes
+          await Future.delayed(const Duration(seconds: 8)); // Adjust pause duration here
+
+          // Update the current image index and set a random animation
+          _currentIndex = (_currentIndex + 1) % images.length;
+          _setRandomAnimation();
+
+          // Notify listeners to update the UI
+          notifyListeners();
+        });
         notifyListeners();
       }
     });

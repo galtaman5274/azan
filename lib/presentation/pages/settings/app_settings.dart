@@ -75,7 +75,7 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
           ),
           Slider(
             value: navigator.incativityTimer.toDouble(),
-            min: 10,
+            min: 3,
             max: 300,
             divisions: 29,
             label: navigator.incativityTimer.toString(),

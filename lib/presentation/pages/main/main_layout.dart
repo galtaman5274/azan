@@ -22,6 +22,7 @@ class ScreenSaver extends StatefulWidget {
 
 class _ScreenSaverState extends State<ScreenSaver>
     with TickerProviderStateMixin {
+
   @override
 void initState() {
   super.initState();
@@ -37,10 +38,10 @@ void initState() {
 }
 
 
+
   @override
   Widget build(BuildContext context) {
-    final navigationProvider = Provider.of<NavigationProvider>(context);
-
+final navigationProvider = Provider.of<NavigationProvider>(context);
     return GestureDetector(
       onTap: navigationProvider.resetInactivityTimer, // Reset timer on tap
       onPanUpdate: (_) =>
