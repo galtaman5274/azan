@@ -9,22 +9,18 @@ class NavigationProvider extends ChangeNotifier {
   bool _showScreenSaver = false;
   final StorageController _storage;
   NavigationProvider(this._storage);
-int _animationDuration = 2;
-int _inactivityTimer = 3;
-void init()async{
-  _animationDuration = int.parse(await _storage.getValue('animationDuration') ?? '2');//50
-  _inactivityTimer = int.parse(await _storage.getValue('inactivityTimer') ?? '3');
-  notifyListeners();
-}
-void saveSaverSettings()async{
-  await _storage.saveValue('animationDuration', _animationDuration.toString());
-  await _storage.saveValue('inactivityTimer', _inactivityTimer.toString());
-  notifyListeners();
-}
-int get animationDuration => _animationDuration;
-int get incativityTimer => _inactivityTimer;
-set animationDuration (int duration) => _animationDuration = duration;
-set incativityTimer(int timer) => _inactivityTimer = timer;
+  int? get animationDuration => screenSaverController?.animationDuration;
+  int? get inactivityTimer => screenSaverController?.inactivityTime;
+  void setAnimationDuration(int value) {
+    screenSaverController?.animationDuration = value;
+    notifyListeners();
+  }
+
+  void setInactivityTimer(int value) {
+    screenSaverController?.inactivityTime = value;
+    notifyListeners();
+  }
+
   ScreenSaverController? screenSaverController;
 
   String get currentScreen => _currentScreen;
@@ -33,16 +29,17 @@ set incativityTimer(int timer) => _inactivityTimer = timer;
     screenSaverController?.updateImages(newImages);
     notifyListeners(); // Notify listeners of the new image list
   }
+
   void resetInactivityTimer() {
-    screenSaverController?.resetInactivityTimer(_inactivityTimer);
+    screenSaverController?.resetInactivityTimer();
   }
+
   void initScreenSaverController(List<String> images, TickerProvider vsync) {
     if (screenSaverController != null) {
       screenSaverController!.dispose();
     }
     screenSaverController = ScreenSaverController(
-      inactivityTime: _inactivityTimer,
-      animationDuration: _animationDuration,
+      storage: _storage,
       images: images,
       vsync: vsync,
       onShowScreenSaver: () {
@@ -54,12 +51,17 @@ set incativityTimer(int timer) => _inactivityTimer = timer;
         notifyListeners();
       },
     );
-    notifyListeners();
+    //notifyListeners();
   }
 
   void navigateTo(String screen) {
     _currentScreen = screen;
     _showScreenSaver = false;
+    notifyListeners();
+  }
+
+  void saveSaverSettings() {
+    screenSaverController?.saveSaverSettings();
     notifyListeners();
   }
 

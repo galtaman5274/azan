@@ -24,7 +24,7 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
 
   @override
   Widget build(BuildContext context) {
-    final navigator = context.read<NavigationProvider>();
+    final navigator = context.watch<NavigationProvider>();
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
               if (newLocale != null) {
                 context.read<LocaleProvider>().setLocale(newLocale);
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  navigator.updateImages(Images.getImages(newLocale));
+                  //navigator.updateImages(Images.getImages(newLocale));
                 });
               }
             },
@@ -52,38 +52,37 @@ class _AppSettingsTabState extends State<AppSettingsTab> {
             }).toList(),
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             'Animation Duration (seconds)',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Slider(
-            value: navigator.animationDuration.toDouble(),
-            min: 5,
+            value: navigator.animationDuration?.toDouble() ?? 0,
+            min: 1,
             max: 60,
-            divisions: 11,
+            divisions: 60,
             label: navigator.animationDuration.toString(),
-            onChanged: (value) {
-              setState(() {
-                navigator.animationDuration =value.toInt();
-              });
-            },
+            onChanged: (value) =>
+                navigator.setAnimationDuration(value.toInt()) 
+             
+            ,
           ),
           const SizedBox(height: 20),
-          Text(
+          const Text(
             'Inactivity Time (seconds)',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Slider(
-            value: navigator.incativityTimer.toDouble(),
-            min: 3,
-            max: 300,
-            divisions: 29,
-            label: navigator.incativityTimer.toString(),
-            onChanged: (value) {
-              setState(() {
-                navigator.incativityTimer = value.toInt();
-              });
-            },
+            value: navigator.inactivityTimer?.toDouble() ?? 1,
+            min: 1,
+            max: 60,
+            divisions: 60,
+            label: navigator.inactivityTimer.toString(),
+            onChanged: (value) =>
+              
+                navigator.setInactivityTimer(value.toInt())
+            
+            ,
           ),
           const SizedBox(height: 20),
           ElevatedButton(

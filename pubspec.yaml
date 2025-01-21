@@ -67,6 +67,7 @@ dependencies:
   on_audio_query: ^2.9.0
   layout_pro: ^0.0.4
   shimmer_effect: ^1.0.4
+  dio: ^5.7.0
 
 
 dev_dependencies:

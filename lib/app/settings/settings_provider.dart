@@ -1,6 +1,4 @@
-import 'package:adhan/adhan.dart';
 import 'package:azan/domain/general_settings.dart';
-import 'package:azan/domain/prayer_settings.dart';
 import 'package:flutter/material.dart';
 import '../../domain/location_settings.dart';
 
