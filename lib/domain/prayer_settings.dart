@@ -111,15 +111,17 @@ class PrayerSettings {
     final storedCalculationMethod =
         await storageController.getValue(PrayerKeys.calculationMethod);
     // if (storedCalculationMethod != null) calculationMethod = CalculationMethod.values[int.parse('1')];
-    if (storedCalculationMethod != null)
+    if (storedCalculationMethod != null) {
       calculationMethod =
           CalculationMethod.values[int.parse(storedCalculationMethod)];
+    }
     // Load asrMethod
     final storedAsrMethod =
         await storageController.getValue(PrayerKeys.asrMethod);
     // if (storedAsrMethod != null) asrMethod = Madhab.values[int.parse('1')];
-    if (storedAsrMethod != null)
+    if (storedAsrMethod != null) {
       asrMethod = Madhab.values[int.parse(storedAsrMethod)];
+    }
 
     final latitude = await storageController.getValue('latitude');
     final longitude = await storageController.getValue('longitude');

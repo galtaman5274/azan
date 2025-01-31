@@ -68,6 +68,9 @@ dependencies:
   layout_pro: ^0.0.4
   shimmer_effect: ^1.0.4
   dio: ^5.7.0
+  # open_filex: ^4.6.0
+  image_picker: ^1.1.2
+  # file_picker: ^8.1.7
 
 
 dev_dependencies:
@@ -91,9 +94,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/quran/images/
-    - assets/quran/svgs/
-    - assets/quran/icons/
     - assets/audio/adhan.mp3
     - assets/images/
     - assets/screen_savers/ar/

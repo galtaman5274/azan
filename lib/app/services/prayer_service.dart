@@ -1,5 +1,4 @@
 import 'package:adhan/adhan.dart';
-import 'package:azan/domain/prayer_settings.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 import '../services/audio_service.dart';

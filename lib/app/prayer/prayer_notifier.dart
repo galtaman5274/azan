@@ -26,18 +26,18 @@ class PrayerTimesNotifier extends ChangeNotifier {
     false,
     false
   ]; // Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha
-  final List<String> _backgroundImages = [
-    'assets/images/home_1.png',
-    'assets/images/home_2.png',
-    'assets/images/home_3.png',
-    'assets/images/home_4.png'
-  ];
-  int _currentImageIndex = 0;
-  String get currentBackgroundImage => _backgroundImages[_currentImageIndex];
+  // final List<String> _backgroundImages = [
+  //   'assets/images/home_1.png',
+  //   'assets/images/home_2.png',
+  //   'assets/images/home_3.png',
+  //   'assets/images/home_4.png'
+  // ];
+  // int _currentImageIndex = 0;
+  // String get currentBackgroundImage => _backgroundImages[_currentImageIndex];
 
   PrayerTimesNotifier(this.prayerSettings, this._adhanAudioService) {
     updateCurrentTimeAndTimeLeft();
-    _startImageChangeTimer();
+    //_startImageChangeTimer();
     _startDayChangeTimer();
   }
   Future<void> _playAdhan() async {
@@ -101,17 +101,17 @@ class PrayerTimesNotifier extends ChangeNotifier {
   }
 
   // Method to update the current background image
-  void updateBackgroundImage() {
-    _currentImageIndex = (_currentImageIndex + 1) % _backgroundImages.length;
-    notifyListeners(); // Notify listeners to update the UI
-  }
+  // void updateBackgroundImage() {
+  //   _currentImageIndex = (_currentImageIndex + 1) % _backgroundImages.length;
+  //   notifyListeners(); // Notify listeners to update the UI
+  // }
 
   // Start a timer to periodically change the background image
-  void _startImageChangeTimer() {
-    _imageChangeTimer = Timer.periodic(const Duration(seconds: 10), (_) {
-      updateBackgroundImage();
-    });
-  }
+  // void _startImageChangeTimer() {
+  //   _imageChangeTimer = Timer.periodic(const Duration(seconds: 10), (_) {
+  //     updateBackgroundImage();
+  //   });
+  // }
 
   // Start a timer to check for a new day and reset prayer times if needed
   void _startDayChangeTimer() {

@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:azan/app/quran/bloc.dart'; // Import your Bloc file
-import 'package:azan/app/quran/events.dart';
-import 'package:azan/app/quran/states.dart';
-import 'package:provider/provider.dart';
-
-import '../../../app/screen_saver/main_provider.dart';
-import '../../../domain/qari.dart';
+import '../../../app/navigation/cubit.dart';
+import '../../../app/url_provider/bloc.dart';
 
 class QariScreen extends StatelessWidget {
-  final String filePath;
-
-  const QariScreen({super.key, required this.filePath});
+  const QariScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,63 +12,41 @@ class QariScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Qari List'),
       ),
-      body: BlocConsumer<QariBloc, QariState>(
-        listener: (context, state) {
-          if (state is QariError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
-        },
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.read<NavigationCubit>().setPage('home'),
+        tooltip: 'Go to Home',
+        child: const Icon(Icons.home),
+      ),
+      body: BlocBuilder<ContentBloc, ContentState>(
         builder: (context, state) {
-          if (state is QariLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is QariLoaded) {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: state.qariList.length,
-                    itemBuilder: (context, index) {
-                      final qari = state.qariList[index];
-                      return ListTile(
-                        title: Text(qari.name),
-                        subtitle: Text(qari.whereFrom),
-                        trailing: Image(image: AssetImage(qari.img)),
-                      );
-                    },
+          if (state is ContentDownloaded) {
+            // Fetch the qariList from the Quran data model
+            final qariList = state.quranFiles?.qariNameList;
+            final qariImageList = state.quranFiles?.qariImageList;
+
+            return ListView.builder(
+              itemCount: qariList?.length,
+              itemBuilder: (context, index) {
+                final qariName = qariList?[index];
+                final qariImage = qariImageList?[index];
+                return ListTile(
+                  title: Text(qariName ?? ''),
+                  subtitle: const Text('Egypt'),
+                  trailing: Image(
+                    image: AssetImage(qariImage ?? ''),
+                    width: 100,
+                    height: 100,
                   ),
-                ),
-                Positioned(
-                  top: 40, // Adjust based on your UI
-                  right: 20, // Adjust based on your UI
-                  child: IconButton(
-                    icon: const Icon(Icons.close, size: 30, color: Colors.black),
-                    onPressed: () {
-                      // Use the provider to navigate back to the home screen
-                      Provider.of<NavigationProvider>(context, listen: false)
-                          .navigateTo('home');
-                    },
-                  ),
-                ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     final updatedQariList = List<Qari>.from(state.qariList);
-                //     updatedQariList.add(Qari(name: 'New Qari', whereFrom: '', description: ''));
-                //     context.read<QariBloc>().add(SaveQariList(filePath, updatedQariList));
-                //   },
-                //   child: const Text('Add and Save Qari'),
-                // ),
-              ],
+                );
+              },
             );
-          } else if (state is QariError) {
-            return Center(
-              child: Text(state.message),
-            );
+          } else if (state is ContentLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ContentError) {
+            return Center(child: Text('Error: ${state.message}'));
+          } else {
+            return const Center(child: Text('No data available.'));
           }
-          return const SizedBox.shrink();
         },
       ),
     );

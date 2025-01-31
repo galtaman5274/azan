@@ -1,7 +1,7 @@
+import 'package:azan/app/navigation/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../../../app/screen_saver/main_provider.dart';
 
 class AdhanPage extends StatefulWidget {
   const AdhanPage({super.key});
@@ -16,12 +16,12 @@ class _AdhanPageState extends State<AdhanPage> {
   @override
   void initState() {
     super.initState();
-    _playAdhan(); // Start playing Adhan when the page opens
+    _playAdhan(
+        'https://app.ayine.tv/Ayine/AzanFiles/Turkish/03-Dhuhr/001.mp4'); // Start playing Adhan when the page opens
   }
 
-  Future<void> _playAdhan() async {
-    await _audioPlayer
-        .play(AssetSource('audio/adhan.mp3')); // Ensure the path is correct
+  Future<void> _playAdhan(String urlSource) async {
+    await _audioPlayer.play(UrlSource(urlSource)); // Ensure the path is correct
   }
 
   @override
@@ -68,15 +68,13 @@ class _AdhanPageState extends State<AdhanPage> {
             top: 40, // Adjust based on your UI
             right: 20, // Adjust based on your UI
             child: IconButton(
-              icon: const Icon(Icons.close, size: 30, color: Colors.white),
-              onPressed: () {
-                // Use the provider to navigate back to the home screen
-                Provider.of<NavigationProvider>(context, listen: false)
-                    .navigateTo('home');
-              },
-            ),
+                icon: const Icon(Icons.close, size: 30, color: Colors.white),
+                onPressed: () {
+                  context.read<NavigationCubit>().setPage('home');
+                  _audioPlayer.stop(); // Stop the audio when the page is closed
+                  _audioPlayer.dispose(); // Release resources
+                }),
           ),
-          
         ],
       ),
     );

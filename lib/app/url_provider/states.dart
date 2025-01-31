@@ -1,4 +1,4 @@
-part of 'cubit.dart';
+part of 'bloc.dart';
 
 abstract class ContentState extends Equatable {
   const ContentState();

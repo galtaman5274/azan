@@ -1,10 +1,13 @@
 // Bloc Classes
+part of 'bloc.dart';
+
 abstract class ContentEvent {}
 
 class CheckForLocal extends ContentEvent {
   final String locale;
   CheckForLocal(this.locale);
 }
+
 class LoadContentList extends ContentEvent {
   final String locale;
   LoadContentList(this.locale);

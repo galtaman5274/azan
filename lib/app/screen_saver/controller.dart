@@ -99,8 +99,10 @@ class ScreenSaverController {
   }
 
   void _startImageChange() {
+    
     _imageChangeTimer =
         Timer.periodic(Duration(seconds: _animationDuration + 2), (timer) {
+          
       if (!_animationController.isAnimating) {
         //_currentIndex = (_currentIndex + 1) % images.length;
         _setRandomAnimation();
@@ -112,8 +114,9 @@ class ScreenSaverController {
 
           // Update the current image index and set a random animation
           _currentIndex = (_currentIndex + 1) % images.length;
+
           _setRandomAnimation();
-          
+
           // Notify listeners to update the UI
           //notifyListeners();
         });

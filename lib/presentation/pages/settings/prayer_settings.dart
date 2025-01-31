@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PrayerSettingsTab extends StatefulWidget {
-  PrayerSettingsTab({super.key});
+  const PrayerSettingsTab({super.key});
 
   @override
   State<PrayerSettingsTab> createState() => _PrayerSettingsTabState();

@@ -1,8 +1,8 @@
+import 'package:azan/app/navigation/cubit.dart';
 import 'package:azan/presentation/localization/localization.dart';
-import 'package:azan/presentation/pages/settings/app_settings.dart';
+import 'package:azan/presentation/pages/settings/app/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../app/screen_saver/main_provider.dart';
 import '../../../app/settings/settings_provider.dart';
 import 'location_settings.dart';
 import 'prayer_settings.dart'; // Import the new tab
@@ -24,6 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title:  Text(context.l10n.settings),
+
       ),
       body: SingleChildScrollView(
         child: Row(
@@ -49,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<NavigationProvider>().navigateTo('home'),
+        onPressed: () =>  context.read<NavigationCubit>().setPage('home'),
         tooltip: 'Go to Home',
         child: const Icon(Icons.home),
       ),

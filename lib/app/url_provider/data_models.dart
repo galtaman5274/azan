@@ -1,7 +1,7 @@
 class Alert {
   final List<String> alerts;
 
-  Alert({required this.alerts});
+ const  Alert({required this.alerts});
 
   factory Alert.fromJson(List<dynamic> json) {
     return Alert(alerts: List<String>.from(json));
@@ -13,7 +13,7 @@ class AzanFiles {
   final Map<String, List<String>> egyptian;
   final Map<String, List<String>> turkish;
   static String url = 'https://app.ayine.tv/Ayine/AzanFiles/';
-  AzanFiles({
+  const AzanFiles({
     required this.arabic,
     required this.egyptian,
     required this.turkish,
@@ -61,6 +61,16 @@ class Quran {
   List<String> muhammedSiddiq;
   List<String> muhammedJibril;
   List<String> mustafa;
+  final qariNameList = [
+      'Muhammad Siddiq Minshawi',
+      'Muhammed Jibril',
+      'Mustafa Ismail'
+    ];
+    final qariImageList = [
+      'assets/qari/Muhammad_Siddiq_Minshawi.jpeg',
+      'assets/qari/Muhammed_Jibril.jpeg',
+      'assets/qari/Mustafa_Ismail.jpeg'
+    ];
   static String url = 'https://app.ayine.tv/Ayine/Quran/';
   Quran({required this.content})
       : muhammedSiddiq = prepareUrl(content, 'Muhammad Siddiq Minshawi'),
@@ -91,7 +101,7 @@ class ScreenSaver {
   List<String> midnightLocal = [];
   List<String> getLocalImages(String locale) {
     switch (locale) {
-      case 'us':
+      case 'en':
         return usLocal;
       case 'ar':
         return arLocal;
@@ -106,7 +116,7 @@ class ScreenSaver {
 
   List<String> getImages(String locale) {
     switch (locale) {
-      case 'us':
+      case 'en':
         return us;
       case 'ar':
         return ar;
@@ -122,7 +132,7 @@ class ScreenSaver {
   void saveToLocal(String path, String locale) {
    
     switch (locale) {
-      case 'us':
+      case 'en':
         usLocal.add(path);
       case 'ar':
         arLocal.add(path);

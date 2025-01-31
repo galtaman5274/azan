@@ -1,4 +1,6 @@
 import 'package:adhan/adhan.dart';
+import 'package:azan/app/main_layout/bloc.dart';
+import 'package:azan/app/navigation/cubit.dart';
 import 'package:azan/presentation/localization/localization.dart';
 import 'package:azan/presentation/pages/home/components/location_widget.dart';
 import 'package:azan/presentation/pages/home/components/main_button.dart';
@@ -9,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app/prayer/prayer_notifier.dart';
-import '../../../../app/screen_saver/main_provider.dart';
 
 class PrayerTimeScreenLandscape extends StatelessWidget {
   const PrayerTimeScreenLandscape({super.key});
@@ -21,7 +22,7 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
         return
             // notifier.prayerSettings.prayerTimes == null
             //     ? const Center(child: CircularProgressIndicator())
-            //     :     
+            //     :
             Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -70,11 +71,18 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                         IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              final provider = Provider.of<NavigationProvider>(
-                                  context,
-                                  listen: false);
-                              provider.navigateTo('settings');
-                              provider.resetInactivityTimer();
+                              //context.read<MainBloc>().add(const NavigateToEvent('settings'));
+                              context
+                                  .read<NavigationCubit>()
+                                  .setPage('settings');
+                              context
+                                  .read<MainBloc>()
+                                  .add(ResetInactivityTimerEvent());
+                              // final provider = Provider.of<NavigationProvider>(
+                              //     context,
+                              //     listen: false);
+                              // provider.navigateTo('settings');
+                              // provider.resetInactivityTimer();
                             },
                             icon: const Icon(Icons.settings))
                       ],
@@ -121,29 +129,29 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   screenSaver: false,
                                 ),
                                 const SizedBox(
-                                  width: 20,
+                                  width: 15,
                                 ),
                                 PrayerTimeItemWidget(
                                   prayerName: context.l10n.prayerTulu,
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.sunrise),
                                   hasPassed: notifier.prayerPassed[1],
-                                   screenSaver: false,
+                                  screenSaver: false,
                                 ),
                                 const SizedBox(
-                                  width: 20,
+                                  width: 15,
                                 ),
                                 PrayerTimeItemWidget(
                                   prayerName: context.l10n.prayerDhuhr,
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.dhuhr),
                                   hasPassed: notifier.prayerPassed[2],
-                                   screenSaver: false,
+                                  screenSaver: false,
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             Row(
                               children: [
@@ -152,27 +160,27 @@ class PrayerTimeScreenLandscape extends StatelessWidget {
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.asr),
                                   hasPassed: notifier.prayerPassed[3],
-                                   screenSaver: false,
+                                  screenSaver: false,
                                 ),
                                 const SizedBox(
-                                  width: 20,
+                                  width: 15,
                                 ),
                                 PrayerTimeItemWidget(
                                   prayerName: context.l10n.prayerMaghrib,
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.maghrib),
                                   hasPassed: notifier.prayerPassed[4],
-                                   screenSaver: false,
+                                  screenSaver: false,
                                 ),
                                 const SizedBox(
-                                  width: 20,
+                                  width: 15,
                                 ),
                                 PrayerTimeItemWidget(
                                   prayerName: context.l10n.prayerIsha,
                                   prayerTime:
                                       notifier.getPrayerTime(Prayer.isha),
                                   hasPassed: notifier.prayerPassed[5],
-                                   screenSaver: false,
+                                  screenSaver: false,
                                 ),
                               ],
                             )
